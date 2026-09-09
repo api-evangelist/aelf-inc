@@ -1,0 +1,75 @@
+generated: '2026-09-09'
+method: searched
+source: >-
+  https://docs.aelf.com/tools/faucet/, https://docs.aelf.com/tools/aelf-playground/,
+  https://docs.aelf.com/resources/integration-guide/,
+  https://docs.aelf.com/quick-start/node-operators/set-up-a-node-on-testnet/ and
+  https://docs.aelf.com/tools/setup-local-environment/smart-contract-developer/
+summary: >-
+  aelf runs a full public testnet alongside mainnet, with a faucet that hands out free test tokens
+  and a browser playground for writing and deploying contracts without installing anything. There
+  are no API keys to switch between modes: the "mode" is the node URL you point at. Two caveats
+  found by probing — the documented testnet RPC hosts did not answer anonymously on 2026-09-09,
+  and the playground host was returning 503.
+mode_switching:
+  mechanism: endpoint selection
+  note: >-
+    No test-vs-live key prefixes exist because the API takes no keys. You select an environment by
+    choosing a node base URL, and a transaction is bound to a chain by its ChainId.
+environments:
+- name: mainnet AELF main chain
+  base_url: https://aelf-public-node.aelf.io
+  chain_id: AELF
+  probed: '2026-09-09'
+  status: 200
+- name: mainnet tDVV side chain
+  base_url: https://tdvv-public-node.aelf.io
+  chain_id: tDVV
+  probed: '2026-09-09'
+  status: 200
+- name: testnet AELF main chain
+  base_url: https://aelf-test-node.aelf.io
+  documented_at: https://docs.aelf.com/resources/integration-guide/
+  probed: '2026-09-09'
+  status: 403
+  note: >-
+    Returns a Kubernetes RBAC denial to anonymous callers ("User \"system:anonymous\" cannot get
+    path") on both /swagger/v1/swagger.json and /api/blockChain/chainStatus. Documented, not
+    reachable.
+- name: testnet tDVW side chain
+  base_url: https://tdvw-test-node.aelf.io
+  documented_at: https://docs.aelf.com/resources/integration-guide/
+  probed: '2026-09-09'
+  status: 522
+  note: Cloudflare origin timeout at probe time.
+- name: local development chain
+  base_url: http://localhost:8000
+  note: >-
+    A node run locally from the aelf-boilerplate / local-environment guides. This is the sandbox
+    the smart-contract tutorials actually use.
+faucet:
+  url: https://testnet-faucet.aelf.io/
+  docs: https://docs.aelf.com/tools/faucet/
+  probed: '2026-09-09'
+  status: 200
+  dispenses: free testnet ELF for the aelf testnet chains
+  note: No fixed test values are published; the faucet issues tokens to an address you supply.
+playground:
+  url: https://playground.aelf.com/
+  docs: https://docs.aelf.com/tools/aelf-playground/
+  probed: '2026-09-09'
+  status: 503
+  note: >-
+    Browser IDE for writing, building and deploying aelf smart contracts without a local toolchain.
+    The documentation page renders; the app host was unavailable when probed.
+api_console:
+  url: https://aelf-public-node.aelf.io/swagger/index.html
+  probed: '2026-09-09'
+  status: 200
+  note: >-
+    Swagger UI served by the node itself — a live try-it console against mainnet. There is no
+    separate sandboxed console, so a request sent from this page is a real mainnet request.
+test_values: []
+test_values_note: >-
+  aelf publishes no magic test identifiers, test cards or fixture accounts. Test material is
+  whatever the faucet funds. Nothing has been invented here.

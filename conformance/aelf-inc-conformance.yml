@@ -1,0 +1,160 @@
+generated: '2026-09-09'
+method: derived
+source: >-
+  openapi/aelf-inc-node-web-api-openapi.json, openapi/aelf-inc-agent-gateway-openapi.yaml, the
+  seven published protobuf contracts in grpc/, https://docs.aelf.com/learn/acs-introduction/ and
+  https://github.com/AElfProject/aelf-audit-reports
+summary: >-
+  aelf conforms to almost none of the cross-cutting web-API standards, and to a full stack of
+  standards in its own market. The web surface is plain vendor REST — no RFC 9457, no OAuth/OIDC,
+  no JSON:API, no idempotency header. The domain surface is where the conformance lives: the ACS
+  family (aelf Contract Standards) is a declared, versioned standard set that the shipped protobuf
+  service definitions implement, including ACS20 and ACS721 as the fungible-token and NFT
+  standards for this chain.
+entries:
+- id: openapi-3.0
+  conforms: true
+  evidence: >-
+    openapi/aelf-inc-node-web-api-openapi.json declares openapi 3.0.1 and is served live by the
+    node at https://aelf-public-node.aelf.io/swagger/v1/swagger.json.
+- id: openapi-3.1
+  conforms: true
+  evidence: openapi/aelf-inc-agent-gateway-openapi.yaml declares openapi 3.1.0.
+- id: protobuf3
+  conforms: true
+  evidence: >-
+    89 .proto files published in AElfProject/AElf/protobuf; seven saved verbatim under grpc/, all
+    syntax proto3.
+- id: grpc
+  conforms: true
+  evidence: >-
+    grpc/aelf-inc-peer-service.proto declares `service PeerService` and
+    grpc/aelf-inc-crosschain-rpc.proto declares `service ParentChainRpc`, `service SideChainRpc`
+    and `service BasicCrossChainRpc` — the node's P2P and cross-chain RPC contracts.
+- id: rfc9457
+  conforms: false
+  evidence: >-
+    Errors use the ABP RemoteServiceErrorResponse envelope with content-type application/json, not
+    application/problem+json. See errors/aelf-inc-error-codes.yml.
+- id: oauth2
+  conforms: false
+  evidence: >-
+    No oauth2 securityScheme in either contract; no /.well-known/oauth-authorization-server on any
+    of the seven hosts probed (well-known/aelf-inc-well-known.yml).
+- id: oidc
+  conforms: false
+  evidence: No /.well-known/openid-configuration on any host probed.
+- id: json-api
+  conforms: false
+  evidence: Responses are bare vendor DTOs; no JSON:API document structure.
+- id: pagination
+  conforms: partial
+  evidence: >-
+    offset/limit query parameters on GET /api/blockChain/transactionResults only (limit default 10,
+    max 100 per error 20007). No pagination on any other collection response.
+- id: idempotency
+  conforms: partial
+  evidence: >-
+    No Idempotency-Key header anywhere. The agent gateway's single-use prepareId gives
+    exactly-once dispatch on POST /transfers/send only. See conventions/aelf-inc-conventions.yml.
+- id: http-basic-auth
+  conforms: true
+  evidence: >-
+    https://docs.aelf.com/tools/web-api/net-api/ documents HTTP Basic authentication on
+    POST /api/net/peer and DELETE /api/net/peer, and the node source names the requirement
+    ("User name and password for basic auth should be set"). It is NOT declared in the OpenAPI.
+- id: jwt-bearer
+  conforms: true
+  evidence: >-
+    aelf Agent Gateway declares securityScheme GatewayBearerAuth (http/bearer) and verifies a
+    NyxID delegation JWT's signature, issuer, audience, scope and expiry in production.
+- id: cors
+  conforms: true
+  evidence: >-
+    Live response headers from aelf-public-node.aelf.io include access-control-allow-origin *,
+    access-control-allow-methods GET,POST,OPTIONS,PUT,DELETE,PATCH and an explicit allow-headers
+    list.
+- id: hsts
+  conforms: true
+  evidence: >-
+    strict-transport-security max-age=15552000; includeSubDomains; preload observed on
+    aelf.com/docs.aelf.com; see security/aelf-inc-domain-security.yml.
+- id: json-schema-2020-12
+  conforms: true
+  evidence: >-
+    json-schema/aelf-inc-wallet-context-v1.schema.json declares
+    $schema https://json-schema.org/draft/2020-12/schema.
+- id: mcp
+  conforms: true
+  evidence: >-
+    First-party stdio MCP server shipped in AElfProject/aelf-node-skill (src/mcp/server.ts, 11
+    tools). Registered in the provider's own skills-catalog.json with artifacts.mcpServer true.
+- id: agent-skills
+  conforms: true
+  evidence: >-
+    Provider-published SKILL.md files with frontmatter in AElfProject/aelf-skills and
+    AElfProject/aelf-node-skill; saved verbatim under skills/.
+- id: a2a
+  conforms: false
+  evidence: >-
+    No agent card at /.well-known/agent-card.json or /.well-known/agent.json on any of the seven
+    hosts probed on 2026-09-09.
+domain_standards:
+- id: acs-aelf-contract-standards
+  name: ACS — aelf Contract Standards
+  conforms: true
+  evidence: >-
+    The standard family is defined by aelf itself and declared IN the contracts: acs0.proto
+    declares `service ACS0` (contract deployment standard), and the docs publish the full ladder
+    ACS0-ACS12 at https://docs.aelf.com/learn/acs-introduction/. Saved verbatim as
+    grpc/aelf-inc-acs0-genesis.proto.
+  members:
+  - ACS0 contract deployment
+  - ACS1 transaction fee
+  - ACS2 parallel execution
+  - ACS3 contract proposal
+  - ACS4 consensus
+  - ACS5 contract threshold
+  - ACS6 random number generation
+  - ACS7 cross-chain
+  - ACS8 transaction resource token fee
+  - ACS9 contract profit dividend
+  - ACS10 dividend pool
+  - ACS11 cross-chain consensus
+  - ACS12 user contract
+- id: acs20-fungible-token
+  name: ACS20 standard token interface (aelf's ERC-20 analogue)
+  conforms: true
+  evidence: >-
+    grpc/aelf-inc-acs20-standard-token.proto declares `service StandardTokenContract` with the
+    canonical transfer/approve/allowance surface. Verbatim from
+    https://raw.githubusercontent.com/AElfProject/AElf/dev/protobuf/acs20.proto.
+- id: acs721-non-fungible-token
+  name: ACS721 standard NFT interface (aelf's ERC-721 analogue)
+  conforms: true
+  evidence: >-
+    grpc/aelf-inc-acs721-standard-nft.proto declares `service StandardNonFungibleTokenContract`.
+    Verbatim from https://raw.githubusercontent.com/AElfProject/AElf/dev/protobuf/acs721.proto.
+- id: acs1155-multi-token
+  name: ACS1155 multi-token interface
+  conforms: unverified
+  evidence: >-
+    acs1155.proto is listed in the AElfProject/AElf protobuf directory but the raw fetch returned
+    an empty body on 2026-09-09, so its service definition was not read and it is NOT claimed.
+security_assurance:
+  program: published third-party audit reports
+  repository: https://github.com/AElfProject/aelf-audit-reports
+  reports:
+  - AElf Audit Report - Trail of Bits
+  - AElf Audit Report - Slow Mist
+  - Smart contract security audit report - QuadraticFunding
+  certifications: []
+  note: >-
+    Named, independent security audits are published, which is real assurance evidence. They are
+    NOT compliance certifications — no SOC 2, ISO 27001, PCI or HIPAA attestation exists — so NO
+    Compliance pointer is emitted in apis.yml. Recording the audits here rather than claiming a
+    certification is the honest reading.
+regulatory_note: >-
+  aelf is a permissionless public blockchain, not a regulated financial institution. No PSD2,
+  FAPI, FDX, open-banking or similar regime applies to the surfaces profiled here, and none is
+  claimed.

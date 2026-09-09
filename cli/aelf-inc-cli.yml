@@ -1,0 +1,59 @@
+generated: '2026-09-09'
+method: searched
+source: https://docs.aelf.com/tools/aelf-cli/commands/
+name: aelf-command
+description: >-
+  First-party Node.js CLI for aelf. Creates and loads accounts, reads chain state, calls read-only
+  contract methods, sends transactions, decodes transaction event logs, creates governance
+  proposals, and runs an interactive console against any node endpoint.
+docs: https://docs.aelf.com/tools/aelf-cli/
+repository: https://github.com/AElfProject/aelf-command
+package:
+  registry: npm
+  name: aelf-command
+  version: 0.1.53-beta.3
+  published: '2025-05-17'
+install:
+- npm install aelf-command -g
+config_file: .aelfrc
+commands:
+- name: create
+  group: wallet
+  description: Create a new account, with a configurable cipher algorithm.
+- name: load
+  group: wallet
+  description: Load an account from a private key or mnemonic.
+- name: wallet
+  group: wallet
+  description: Show wallet details — private key, address, public key and mnemonic.
+- name: config
+  group: config
+  description: Get, set, delete or list configuration values in .aelfrc.
+- name: proposal
+  group: governance
+  description: Create a proposal through the Parliament, Referendum or Association contract.
+- name: send
+  group: transactions
+  description: Send a transaction that executes a contract method.
+- name: call
+  group: transactions
+  description: Call a read-only method on a contract.
+- name: event
+  group: transactions
+  description: Deserialize a transaction result to read decoded event logs.
+- name: get-chain-status
+  group: chain
+  description: Get the current status of the blockchain.
+- name: get-tx-result
+  group: chain
+  description: Get transaction details and result by transaction id.
+- name: get-blk-info
+  group: chain
+  description: Get block information by block height or block hash.
+- name: console
+  group: interactive
+  description: Open an interactive console for direct blockchain interaction.
+- name: dapp-server
+  group: interactive
+  description: Start a socket.io server that supplies services to dApps.
+command_count: 13

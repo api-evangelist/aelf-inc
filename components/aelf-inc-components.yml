@@ -1,0 +1,64 @@
+generated: '2026-09-09'
+method: searched
+source: >-
+  https://docs.aelf.com/tools/design/, https://docs.aelf.com/resources/browser-extension/,
+  https://docs.aelf.com/tools/aelf-studio-extention/ and the AElfProject GitHub organization,
+  with versions read from registry.npmjs.org
+summary: >-
+  aelf ships client-side building blocks distinct from its chain SDKs: a React wallet-connection
+  adapter set, a design-system component library, and editor/browser extensions. The wallet
+  adapter is the one that matters for integration — it is how a dApp gets a signing identity
+  without implementing wallet plumbing.
+families:
+- name: Wallet connection
+  description: >-
+    Modular React wallet collection and components for aelf applications. Supports NightElf,
+    PortkeyAA and PortkeyDiscover wallet types, with bridge/adapter packages per framework.
+  repository: https://github.com/AElfProject/aelf-web-login
+  docs: https://docs.aelf.com/resources/integration-guide/
+  packages:
+  - registry: npm
+    name: '@aelf-web-login/wallet-adapter-react'
+    version: 0.4.0-alpha.21
+    published: '2026-01-23'
+  - registry: npm
+    name: '@aelf-web-login/wallet-adapter-bridge'
+    version: 0.4.0-alpha.21
+    published: '2026-01-23'
+  note: Latest published versions on both packages are alpha pre-releases.
+- name: Design system
+  description: >-
+    UI component library built on Ant Design and compliant with the aelf visual specification.
+  repository: https://github.com/AElfProject/aelf-design
+  docs: https://docs.aelf.com/tools/design/
+  packages:
+  - registry: npm
+    name: aelf-design
+    version: 1.1.2
+    published: '2024-10-16'
+- name: Editor and browser extensions
+  description: >-
+    aelf Studio VS Code extension for contract development, and the browser wallet extension
+    documented for end users.
+  repositories:
+  - https://github.com/AElfProject/vscode-aelf-studio
+  docs:
+  - https://docs.aelf.com/tools/aelf-studio-extention/
+  - https://docs.aelf.com/resources/browser-extension/
+  packages: []
+- name: dApp scaffolding
+  description: One-command scaffold for an aelf dApp with example components.
+  repository: https://github.com/AElfProject/create-aelf-dapp
+  packages:
+  - registry: npm
+    name: create-aelf-dapp
+    version: null
+    published: null
+    note: >-
+      Version not recorded — the package name was not confirmed against registry.npmjs.org in this
+      pass, so nothing is asserted rather than guessing from the repository name.
+loader_libraries: []
+hosted_surfaces:
+- name: aelf Playground
+  url: https://playground.aelf.com/
+  note: Hosted browser IDE, not an embeddable component. See sandbox/aelf-inc-sandbox.yml.

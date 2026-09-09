@@ -1,0 +1,43 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enrichment overlay for the aelf Agent Gateway API
+  version: 1.0.0
+x-provenance:
+  generated: '2026-09-09'
+  method: generated
+  source: openapi/aelf-inc-agent-gateway-openapi.yaml
+  extends: openapi/aelf-inc-agent-gateway-openapi.yaml
+actions:
+- target: $.info
+  description: Record where this contract lives and what it is.
+  update:
+    x-source: >-
+      https://github.com/AElfProject/aelf-agent-gateway/blob/main/kitty-specs/1-nyxid-aelf-wallet-gateway-01KX0Q5W/contracts/aelf-wallet-gateway.openapi.yaml
+    x-deployment: self-hosted (local or private network); aelf operates no public instance
+    x-release-status: >-
+      Provider records v0.2.0 as having remaining release blockers — a dedicated wallet:write
+      scope, live CA validation, a controlled AELF transfer and a 48-hour observation window.
+- target: $
+  description: Attach the enrichment artifacts that read this contract.
+  update:
+    x-artifacts:
+      conventions: conventions/aelf-inc-conventions.yml
+      authentication: authentication/aelf-inc-authentication.yml
+      conformance: conformance/aelf-inc-conformance.yml
+- target: $.paths['/transfers/send'].post
+  description: Record the exactly-once and reversibility semantics the README states.
+  update:
+    x-agent-safety:
+      idempotency: >-
+        Accepts only a single-use prepareId issued by POST /transfers/prepare and approved by a
+        human; durable dispatch with an atomic claim and an encrypted signed-transaction journal
+        makes a duplicate send non-broadcasting.
+      consequence: irreversible-once-dispatched
+      reversal_operation: decideAelfApproval
+      reversal_window: only while the prepare intent is pending approval and undispatched
+- target: $.servers
+  description: Note that the loopback server is the product's real default, not a placeholder.
+  update:
+    x-server-note: >-
+      http://localhost:8787 is the documented default for a self-hosted gateway. It is not a
+      development placeholder for a hosted API — no hosted instance exists.

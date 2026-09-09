@@ -1,0 +1,48 @@
+generated: '2026-09-09'
+method: searched
+source: >-
+  https://docs.aelf.com/tools/web-api/, https://docs.aelf.com/tools/web-api/chain-api/,
+  https://docs.aelf.com/tools/web-api/net-api/, https://docs.aelf.com/resources/integration-guide/
+  and a live header inspection of https://aelf-public-node.aelf.io/api/blockChain/chainStatus
+limit_count: 0
+headers: []
+status_on_exhaustion: unknown
+summary: >-
+  aelf documents no rate limits for the public node Web API, and the live response carries no
+  rate-limit headers of any kind. The observed response headers are date, server (cloudflare),
+  allow, the CORS set, x-content-type-options, cf-cache-status, strict-transport-security and
+  cf-ray — no X-RateLimit-*, no RateLimit-*, no Retry-After. An agent has no runtime signal to
+  back off on, and no documented number to plan against.
+observed_headers:
+  url: https://aelf-public-node.aelf.io/api/blockChain/chainStatus
+  observed: '2026-09-09'
+  rate_limit_headers_present: false
+  headers_seen:
+  - date
+  - server (cloudflare)
+  - allow
+  - access-control-allow-origin
+  - access-control-allow-headers
+  - access-control-allow-methods
+  - access-control-allow-credentials
+  - x-content-type-options
+  - cf-cache-status
+  - strict-transport-security
+  - cf-ray
+limits: []
+related_caps:
+- name: transactionResults page size
+  value: limit must be between 0 and 100
+  enforcement: error code 20007 (InvalidLimit)
+  source: errors/aelf-inc-error-codes.yml
+  note: A payload cap, not a request-rate limit.
+- name: on-chain transaction fee
+  value: per-transaction fee charged in ELF (ACS1/ACS8 fee standards)
+  note: >-
+    The real throttle on writes is economic rather than protocol-level — every transaction costs
+    a fee, and resource tokens meter contract execution. See plans/aelf-inc-plans-pricing.yml.
+note: >-
+  Cloudflare sits in front of the public node, so an undocumented edge policy may exist; nothing
+  about it is published and nothing was triggered by this pass's small number of requests. Zero is
+  recorded as an honest measurement of what the provider publishes, not as proof that no limit
+  exists.

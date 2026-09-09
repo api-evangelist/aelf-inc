@@ -1,0 +1,106 @@
+generated: '2026-09-09'
+method: searched
+status: published
+source: https://github.com/AElfProject/aelf-node-skill
+sources:
+- https://github.com/AElfProject/aelf-node-skill/blob/main/SKILL.md
+- https://raw.githubusercontent.com/AElfProject/aelf-node-skill/main/mcp-config.example.json
+- https://raw.githubusercontent.com/AElfProject/aelf-node-skill/main/openclaw.json
+- https://raw.githubusercontent.com/AElfProject/aelf-skills/main/skills-catalog.json
+deployment:
+  mode: local-stdio
+  install: bunx -p @blockchain-forever/aelf-node-skill aelf-node-setup openclaw
+  package: https://www.npmjs.com/package/@blockchain-forever/aelf-node-skill
+  auth: api-key
+  verified: searched
+  note: >-
+    aelf ships NO hosted/remote MCP endpoint. The server is a stdio process an operator installs
+    and runs locally — the provider's own mcp-config.example.json registers it as
+    {"command":"bun","args":["run","/ABSOLUTE/PATH/TO/src/mcp/server.ts"]}. Reads need no
+    credential (they hit the anonymous public node Web API); writes read a private key from the
+    AELF_PRIVATE_KEY environment variable, which is why auth is recorded as api-key rather than
+    none. No endpoint URL is recorded because none exists; do not infer one.
+server:
+  name: aelf-node-skill
+  transport: stdio
+  repository: https://github.com/AElfProject/aelf-node-skill
+  version: 0.1.3
+  published: '2026-03-04'
+  runtime: bun
+  entrypoint: src/mcp/server.ts
+  start_command: bun run mcp
+  clients:
+    openclaw: native
+    cursor: native-setup
+    claude_desktop: native-setup
+    ironclaw: native-setup
+    claude_code: manual-mcp
+    codex: manual-cli-or-mcp
+  backing_api: openapi/aelf-inc-node-web-api-openapi.json
+  tools_file: mcp/aelf-inc-node-skill-tools.json
+env:
+- name: AELF_PRIVATE_KEY
+  required_for: write operations (send contract transaction)
+  note: Provider guidance is explicit that keys are never printed and never persisted in plaintext.
+tool_count: 11
+tools:
+- name: aelf-get-chain-status
+  category: chain
+  description: Get chain status from a node
+- name: aelf-get-block-height
+  category: chain
+  description: Get latest block height from a node
+- name: aelf-get-block
+  category: chain
+  description: Get block detail by block hash
+- name: aelf-get-transaction-result
+  category: transactions
+  description: Get transaction result by transaction id
+- name: aelf-get-contract-view-methods
+  category: contracts
+  description: List contract view methods via REST adapter
+- name: aelf-get-system-contract-address
+  category: contracts
+  description: Get system contract address by name
+- name: aelf-call-contract-view
+  category: contracts
+  description: Call a contract view method via aelf-sdk
+- name: aelf-send-contract-transaction
+  category: contracts
+  description: Send a contract transaction via aelf-sdk
+  write: true
+- name: aelf-estimate-transaction-fee
+  category: transactions
+  description: Estimate transaction fee via REST + SDK fallback
+- name: aelf-import-node
+  category: registry
+  description: Import or update a custom node profile
+- name: aelf-list-nodes
+  category: registry
+  description: List imported and available nodes
+input_schemas:
+  state: unusable-as-published
+  note: >-
+    The provider's openclaw.json declares every tool's inputSchema as
+    {"type":"object","properties":{},"additionalProperties":true} — a permissive placeholder, not a
+    typed contract. The real parameters exist in the TypeScript source and in the backing node Web
+    API operations, but an agent reading only the published manifest gets no argument names, types
+    or requirements. This is the single largest gap in an otherwise strong agent surface; the
+    crosswalk in mcp/aelf-inc-tool-crosswalk.yml records the REST operation each tool inherits its
+    real parameters from.
+ecosystem_skills:
+  note: >-
+    aelf's own skills-catalog.json registers seven skills, each declaring an MCP server. Only the
+    two below are published by aelf itself; the other five are ecosystem projects in separate
+    GitHub organizations (AelfScanProject, Awaken-Finance, eforest-finance, Portkey-Wallet,
+    TomorrowDAOProject) and are NOT counted as aelf's MCP surface.
+  first_party:
+  - aelf-node-skill (AElfProject) — 11 tools
+  - aelf-skills hub (AElfProject) — discovery/routing/bootstrap meta-skill
+  third_party:
+  - aelfscan-skill (AelfScanProject) — 61 tools
+  - awaken-agent-skills (Awaken-Finance) — 11 tools
+  - eforest-agent-skills (eforest-finance) — 48 tools
+  - portkey-ca-agent-skills (Portkey-Wallet) — 32 tools
+  - portkey-eoa-agent-skills (Portkey-Wallet) — 21 tools
+  - tomorrowdao-agent-skills (TomorrowDAOProject) — 44 tools

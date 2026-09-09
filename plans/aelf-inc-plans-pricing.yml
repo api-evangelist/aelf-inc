@@ -1,0 +1,40 @@
+generated: '2026-09-09'
+method: searched
+source: >-
+  https://docs.aelf.com/resources/tokenomics/, https://docs.aelf.com/about-aelf/elf-token/,
+  https://docs.aelf.com/learn/acs-introduction/acs1-transaction-fee-standard/ and
+  https://docs.aelf.com/learn/acs-introduction/acs8-transaction-resource-token-fee-standard/
+plan_count: 0
+currency: ELF
+summary: >-
+  aelf publishes no commercial API plans, tiers or subscriptions, and there is no pricing page —
+  because there is nothing to subscribe to. It is a permissionless public blockchain: reading the
+  node Web API is free and anonymous, and writing costs an on-chain transaction fee denominated in
+  the network's ELF token. plan_count is a genuine zero, not a missing measurement.
+plans: []
+cost_model:
+  kind: on-chain-fees
+  unit: ELF token
+  read_operations:
+    cost: none
+    note: Every /api/blockChain read on the public nodes is anonymous and free.
+  write_operations:
+    cost: transaction fee, charged on-chain
+    standards:
+    - ACS1 — transaction fee standard (method fee charged per contract call)
+    - ACS8 — transaction resource token fee standard (CPU/RAM/DISK/NET resource tokens metered
+      for contract execution)
+    estimation_endpoint: POST /api/blockChain/calculateTransactionFee
+    note: >-
+      The API itself exposes fee estimation as a first-class operation, which is the closest thing
+      to a price quote this provider offers.
+  free_allowance:
+    exists: true
+    note: >-
+      AELF v1.5.0 release notes record support for multiple tokens for threshold and free
+      allowance, and for a secondary delegate paying transaction fees on a user's behalf.
+  test_network:
+    cost: none
+    note: Testnet tokens are dispensed free by the faucet — see sandbox/aelf-inc-sandbox.yml.
+enterprise_contact: https://form.aelf.com/contact
+grants: https://docs.aelf.com/about-aelf/grants/

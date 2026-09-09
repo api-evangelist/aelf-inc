@@ -64,5 +64,21 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Aelf is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://forgeglobal.com/aelf-inc_stock/
+aelf (styled lowercase by the company; listed on the secondary market as "Aelf Inc") is a
+Singapore-headquartered, AI-enhanced cloud-native layer-1 blockchain network founded in 2017.
+It is written in C# with a modular multi-side-chain architecture, parallel transaction execution
+and built-in cross-chain communication.
+
+Its public machine-readable surface, as profiled here on 2026-09-09:
+
+- **AElf node Web API** — OpenAPI 3.0.1, 24 operations, served live by the node itself at
+  `https://aelf-public-node.aelf.io/swagger/v1/swagger.json` (mainnet AELF and tDVV both answer).
+- **89 published protobuf contracts** — the ACS contract standards (ACS0–ACS12, ACS20, ACS721)
+  plus the gRPC peer and cross-chain services; seven saved verbatim under `grpc/`.
+- **Six first-party chain SDKs** (JavaScript, Python, C#, Go, Java, PHP) and the `aelf-command` CLI.
+- **A first-party agent layer** — provider-published Agent Skills and a stdio MCP server
+  (`@blockchain-forever/aelf-node-skill`, 11 tools). There is no hosted MCP endpoint and no A2A
+  agent card.
+
+Links: <https://aelf.com/> · <https://docs.aelf.com/> · <https://github.com/AElfProject> ·
+harvest listing <https://forgeglobal.com/aelf-inc_stock/>

@@ -1,0 +1,151 @@
+generated: '2026-09-09'
+method: searched
+source: >-
+  Registry metadata endpoints (registry.npmjs.org, pypi.org/pypi, api.nuget.org,
+  proxy.golang.org, search.maven.org, repo.packagist.org) plus the provider's own SDK index at
+  https://docs.aelf.com/tools/chain-sdk/ and the AElfProject GitHub organization.
+summary:
+  first_party_sdk_count: 6
+  first_party_other_count: 4
+  third_party_package_count: 0
+  note: >-
+    aelf publishes six first-party chain SDKs — one per language listed on its own
+    /tools/chain-sdk/ index — and every one resolves to a package in that language's public
+    registry, all sourced from repositories in the AElfProject GitHub organization.
+    CURRENCY IS THE FINDING: four of the six (Python, C#, Java, PHP) were last published on
+    2023-03-09/10 at version 1.2.3 and have not been released against any node version since
+    AELF v1.4.1. Only the JavaScript SDK (2025-09-23) and the Go SDK (2024-09-14) have shipped
+    in the last two years, while the node itself released v1.12.1 on 2026-09-02 — including the
+    v1.12.0 MultiTransaction type and the transactionResultWithBVP endpoint that the 2023 SDKs
+    predate. The agent-layer packages are the actively maintained ones.
+packages:
+- language: javascript
+  registry: npm
+  name: aelf-sdk
+  url: https://www.npmjs.com/package/aelf-sdk
+  install: npm install aelf-sdk
+  repository: https://github.com/AElfProject/aelf-sdk.js
+  docs: https://docs.aelf.com/tools/chain-sdk/javascript-sdk/
+  official: true
+  version: 3.5.1-beta.0
+  published: '2025-09-23'
+  note: Latest published dist-tag is a beta. Reads/writes the node Web API and signs transactions.
+- language: python
+  registry: pypi
+  name: aelf-sdk
+  url: https://pypi.org/project/aelf-sdk/
+  install: pip install aelf-sdk
+  repository: https://github.com/AElfProject/aelf-sdk.py
+  docs: https://docs.aelf.com/tools/chain-sdk/python-sdk/
+  official: true
+  version: 1.2.3
+  published: '2023-03-10'
+- language: csharp
+  registry: nuget
+  name: AElf.Client
+  url: https://www.nuget.org/packages/AElf.Client
+  install: dotnet add package AElf.Client
+  repository: https://github.com/AElfProject/aelf-sdk.cs
+  docs: https://docs.aelf.com/tools/chain-sdk/csharp-sdk/
+  official: true
+  version: 1.2.3
+  published: '2023-03-09'
+- language: go
+  registry: go
+  name: github.com/AElfProject/aelf-sdk.go
+  url: https://pkg.go.dev/github.com/AElfProject/aelf-sdk.go
+  install: go get github.com/AElfProject/aelf-sdk.go
+  repository: https://github.com/AElfProject/aelf-sdk.go
+  docs: https://docs.aelf.com/tools/chain-sdk/go-sdk/
+  official: true
+  version: v1.3.4
+  published: '2024-09-14'
+- language: java
+  registry: maven
+  name: io.aelf:aelf-sdk
+  url: https://central.sonatype.com/artifact/io.aelf/aelf-sdk
+  install: 'Maven coordinates io.aelf:aelf-sdk:1.2.3'
+  repository: https://github.com/AElfProject/aelf-sdk.java
+  docs: https://docs.aelf.com/tools/chain-sdk/java-sdk/
+  official: true
+  version: 1.2.3
+  published: '2023-03-09'
+- language: php
+  registry: packagist
+  name: aelf/aelf-sdk
+  url: https://packagist.org/packages/aelf/aelf-sdk
+  install: composer require aelf/aelf-sdk
+  repository: https://github.com/AElfProject/aelf-sdk.php
+  docs: https://docs.aelf.com/tools/chain-sdk/php-sdk/
+  official: true
+  version: v1.2.3
+  published: '2023-03-09'
+- language: javascript
+  registry: npm
+  name: aelf-command
+  url: https://www.npmjs.com/package/aelf-command
+  install: npm install -g aelf-command
+  repository: https://github.com/AElfProject/aelf-command
+  docs: https://docs.aelf.com/tools/aelf-cli/
+  official: true
+  kind: cli
+  version: 0.1.53-beta.3
+  published: '2025-05-17'
+- language: typescript
+  registry: npm
+  name: '@blockchain-forever/aelf-node-skill'
+  url: https://www.npmjs.com/package/@blockchain-forever/aelf-node-skill
+  install: bunx -p @blockchain-forever/aelf-node-skill aelf-node-setup openclaw
+  repository: https://github.com/AElfProject/aelf-node-skill
+  official: true
+  kind: agent-skill+mcp-server
+  version: 0.1.3
+  published: '2026-03-04'
+  note: >-
+    Ships the SKILL.md, the CLI entry and the stdio MCP server for the aelf node. Published under
+    the @blockchain-forever npm scope rather than an @aelf scope, but the source repository sits in
+    the AElfProject organization and the skill is listed in aelf's own skills-catalog.json — hence
+    official:true. A consumer resolving this by npm scope alone would not find it under aelf.
+- language: typescript
+  registry: npm
+  name: '@aelf-web-login/wallet-adapter-react'
+  url: https://www.npmjs.com/package/@aelf-web-login/wallet-adapter-react
+  install: npm install @aelf-web-login/wallet-adapter-react
+  repository: https://github.com/AElfProject/aelf-web-login
+  official: true
+  kind: ui-components
+  version: 0.4.0-alpha.21
+  published: '2026-01-23'
+- language: typescript
+  registry: npm
+  name: aelf-design
+  url: https://www.npmjs.com/package/aelf-design
+  install: npm install aelf-design
+  repository: https://github.com/AElfProject/aelf-design
+  official: true
+  kind: ui-components
+  version: 1.1.2
+  published: '2024-10-16'
+third_party_packages: []
+registries_checked:
+- registry: npm
+  result: hit
+- registry: pypi
+  result: hit
+- registry: nuget
+  result: hit
+- registry: maven-central
+  result: hit
+- registry: packagist
+  result: hit
+- registry: go-proxy
+  result: hit
+- registry: rubygems
+  result: miss
+  note: No aelf gem published; aelf documents no Ruby SDK.
+- registry: crates.io
+  result: miss
+  note: >-
+    No crate named aelf. AElfProject/aelf-web3.rust exists on GitHub ("Official Rust SDK for
+    AElf") but is not published to crates.io and is not listed on the provider's own SDK index,
+    so it is not recorded as a released package.

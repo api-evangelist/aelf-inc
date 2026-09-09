@@ -1,0 +1,88 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enrichment overlay for the aelf Node Web API
+  version: 1.0.0
+x-provenance:
+  generated: '2026-09-09'
+  method: generated
+  source: openapi/aelf-inc-node-web-api-openapi.json
+  extends: openapi/aelf-inc-node-web-api-openapi.json
+  note: >-
+    Captures API Evangelist's enrichment of the served contract. The original document is never
+    mutated. Every action below is either an observed fact (recorded with its probe) or a pointer
+    into an artifact in this repository — no operation semantics are invented.
+actions:
+- target: $.info
+  description: Record the real servers, contact and licence context the served document omits.
+  update:
+    contact:
+      name: aelf
+      url: https://form.aelf.com/contact
+    x-documentation: https://docs.aelf.com/tools/web-api/
+    x-api-reference: https://docs.aelf.com/tools/web-api/chain-api/
+    x-node-release: v1.12.1
+    x-node-release-date: '2026-09-02'
+- target: $
+  description: >-
+    Add the servers block the node's own document leaves out entirely. Both hosts were probed on
+    2026-09-09 and returned the identical spec; the two testnet hosts the provider documents are
+    recorded but were not reachable anonymously.
+  update:
+    servers:
+    - url: https://aelf-public-node.aelf.io
+      description: Mainnet AELF main chain (probed 200, 2026-09-09)
+    - url: https://tdvv-public-node.aelf.io
+      description: Mainnet tDVV side chain (probed 200, 2026-09-09)
+    - url: https://aelf-test-node.aelf.io
+      description: >-
+        Testnet AELF main chain as documented in the integration guide. Probed 2026-09-09 and
+        returned 403 to anonymous callers.
+    - url: https://tdvw-test-node.aelf.io
+      description: >-
+        Testnet tDVW side chain as documented in the integration guide. Probed 2026-09-09 and
+        returned Cloudflare 522.
+- target: $
+  description: Attach the enrichment artifacts derived from this contract.
+  update:
+    x-artifacts:
+      error_catalog: errors/aelf-inc-error-codes.yml
+      conventions: conventions/aelf-inc-conventions.yml
+      data_model: data-model/aelf-inc-data-model.yml
+      authentication: authentication/aelf-inc-authentication.yml
+      rate_limits: rate-limits/aelf-inc-rate-limits.yml
+      conformance: conformance/aelf-inc-conformance.yml
+      mcp_crosswalk: mcp/aelf-inc-tool-crosswalk.yml
+- target: $
+  description: >-
+    Record the two contract-quality gaps found by reading the document: no operationId on any
+    operation, and no securitySchemes despite two documented Basic-auth operations.
+  update:
+    x-contract-gaps:
+    - id: no-operation-ids
+      detail: >-
+        None of the 24 operations declares an operationId, so no stable machine name exists for
+        any of them. Generated clients fall back to path-derived names and the MCP crosswalk has
+        to address operations as "METHOD /path".
+    - id: no-security-schemes
+      detail: >-
+        components.securitySchemes is absent. POST /api/net/peer and DELETE /api/net/peer are
+        documented as HTTP Basic at https://docs.aelf.com/tools/web-api/net-api/ but appear
+        anonymous in the contract.
+    - id: uniform-error-responses
+      detail: >-
+        Every operation declares the same 400/401/403/404/500/501 set with no per-operation
+        meaning and no examples. Observed behaviour differs from the shape a reader would expect:
+        an invalid block hash returns 403, not 400.
+    - id: no-examples
+      detail: No request or response examples are present in the served document.
+- target: $.paths['/api/blockChain/sendTransaction'].post
+  description: Flag the irreversibility of the chain write for agent consumers.
+  update:
+    x-agent-safety:
+      consequence: irreversible
+      reversal_operation: null
+      dry_run: POST /api/blockChain/executeTransaction
+      cost_preview: POST /api/blockChain/calculateTransactionFee
+      note: >-
+        Once broadcast and included in a block this cannot be cancelled, refunded or reversed. See
+        the reversibility block in conventions/aelf-inc-conventions.yml.

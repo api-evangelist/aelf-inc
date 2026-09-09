@@ -1,0 +1,77 @@
+generated: '2026-09-09'
+method: searched
+source: >-
+  https://docs.aelf.com/tools/web-api/net-api/ (Basic authentication on the peer operations),
+  https://github.com/AElfProject/aelf-agent-gateway#readme (bearer + NyxID delegation JWT),
+  https://raw.githubusercontent.com/AElfProject/AElf/dev/src/AElf.WebApp.Application.Chain/Error.cs
+  and the two contracts in openapi/
+summary: >-
+  The aelf node Web API is an unauthenticated API. There is no key, no token and no OAuth: reads
+  are open and even the transaction-submitting writes take no HTTP credential, because authority
+  travels inside the signed transaction rather than in a header. Two exceptions and one caveat:
+  the peer add/remove operations are documented as HTTP Basic, the self-hosted agent gateway uses
+  bearer plus a delegated JWT, and NEITHER of the node's auth requirements is declared in its
+  OpenAPI.
+surfaces:
+- surface: aelf Node Web API
+  spec: openapi/aelf-inc-node-web-api-openapi.json
+  declared_security_schemes: []
+  effective_model: none (anonymous) for all /api/blockChain operations
+  authority_model: >-
+    Write authority is cryptographic, not HTTP. A transaction carries From, To, MethodName, Params,
+    RefBlockNumber/RefBlockPrefix and a Signature produced by the sender's private key; the node
+    validates the signature (error 20013 InvalidSignature) and the chain enforces permissions.
+    Sending a transaction is therefore an open endpoint that only accepts already-authorized bytes.
+  key_management: >-
+    Keys live client-side — created by `aelf-command create`, loaded from private key or mnemonic,
+    or held by a wallet (NightElf, Portkey). The API never sees them.
+  exceptions:
+  - operations:
+    - POST /api/net/peer
+    - DELETE /api/net/peer
+    scheme: http basic
+    documented_at: https://docs.aelf.com/tools/web-api/net-api/
+    source_signal: >-
+      Error.cs carries the constant NeedBasicAuth = "User name and password for basic auth should
+      be set", confirming the node enforces it when configured.
+    gap: >-
+      The served OpenAPI declares NO securitySchemes at all, so these two operations look
+      anonymous to any machine reading the contract. A generated client will fail on them.
+- surface: aelf Agent Gateway
+  spec: openapi/aelf-inc-agent-gateway-openapi.yaml
+  declared_security_schemes:
+  - name: GatewayBearerAuth
+    type: http
+    scheme: bearer
+  effective_model: bearer token, plus NyxID identity and delegation JWTs in production
+  details:
+    open_operations:
+    - GET /health
+    - /openapi.json
+    - /docs
+    production_verification: signature, issuer, audience, scope and expiry
+    configuration:
+    - NYXID_JWKS_URL
+    - NYXID_ISSUER
+    - NYXID_AUDIENCE
+    - NYXID_REQUIRED_DELEGATION_SCOPE
+    admin_model: >-
+      Admin access derives only from a verified `sub` present in GATEWAY_ADMIN_NYX_USER_IDS;
+      role/scope headers cannot grant it. `trusted_headers` identity is restricted to
+      non-production loopback development.
+    scopes_note: >-
+      A dedicated `wallet:write` delegation scope is named in the provider's own release notes as a
+      remaining blocker rather than a shipped feature, so no scope reference page exists and no
+      scopes/ artifact is emitted.
+- surface: MCP (aelf-node-skill)
+  transport: stdio
+  effective_model: none for reads; AELF_PRIVATE_KEY environment variable for writes
+  detail: mcp/aelf-inc-mcp.yml
+oauth2: false
+oidc: false
+mtls: false
+api_keys: false
+discovery_documents:
+  openid_configuration: absent
+  oauth_authorization_server: absent
+  probed: well-known/aelf-inc-well-known.yml

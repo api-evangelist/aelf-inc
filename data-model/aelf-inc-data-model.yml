@@ -1,0 +1,179 @@
+generated: '2026-09-09'
+method: derived
+source: >-
+  openapi/aelf-inc-node-web-api-openapi.json ($ref links and id-reference fields across the 27
+  AElf.* DTOs in components.schemas), cross-read against
+  https://docs.aelf.com/learn/transactions/ and https://docs.aelf.com/learn/addresses/
+summary: >-
+  The model is a blockchain, so it is a chain of blocks containing transactions, each of which
+  produces one result carrying log events. What makes it aelf-specific is the side-chain axis:
+  every entity is scoped by ChainId, and MerklePath exists so a transaction on one chain can be
+  proven to another. Almost every relationship is expressed as a hex-string identifier rather than
+  an embedded object or a $ref, so the graph below is largely inferred from field names and
+  semantics, not from the spec's own links.
+identifier_conventions:
+- entity: Block
+  id_field: BlockHash
+  format: 64-character hex string
+  error_on_bad_format: '20003 InvalidBlockHash'
+- entity: Transaction
+  id_field: TransactionId
+  format: 64-character hex string
+  error_on_bad_format: '20004 InvalidTransactionId'
+- entity: Account / Contract
+  id_field: Address
+  format: base58 aelf address
+  error_on_bad_format: '20002 InvalidAddress / 20010 InvalidContractAddress'
+- entity: Chain
+  id_field: ChainId
+  format: short string, e.g. AELF (main chain), tDVV / tDVW (side chains)
+entities:
+- name: ChainStatus
+  schema: AElf.WebApp.Application.Chain.Dto.ChainStatusDto
+  description: >-
+    Head-of-chain summary: best chain, longest chain, last irreversible block, genesis block and
+    the genesis contract address, plus the branch and not-linked-block maps.
+  read_by:
+  - GET /api/blockChain/chainStatus
+  relationships:
+  - has_one: Block
+    via: BestChainHash
+  - has_one: Block
+    via: LastIrreversibleBlockHash
+  - has_one: Block
+    via: GenesisBlockHash
+  - has_one: Contract
+    via: GenesisContractAddress
+- name: Block
+  schema: AElf.WebApp.Application.Chain.Dto.BlockDto
+  read_by:
+  - GET /api/blockChain/block
+  - GET /api/blockChain/blockByHeight
+  relationships:
+  - has_one: BlockHeader
+    via: Header ($ref)
+  - has_one: BlockBody
+    via: Body ($ref)
+- name: BlockHeader
+  schema: AElf.WebApp.Application.Chain.Dto.BlockHeaderDto
+  relationships:
+  - belongs_to: Chain
+    via: ChainId
+  - has_one: Block
+    via: PreviousBlockHash
+  note: >-
+    Carries the three merkle roots (transactions, world state, transaction state) that make
+    cross-chain verification possible.
+- name: BlockBody
+  schema: AElf.WebApp.Application.Chain.Dto.BlockBodyDto
+  relationships:
+  - has_many: Transaction
+    via: Transactions (array of transaction ids)
+- name: BlockState
+  schema: AElf.WebApp.Application.Chain.Dto.BlockStateDto
+  read_by:
+  - GET /api/blockChain/blockState
+  relationships:
+  - belongs_to: Block
+    via: BlockHash
+  - has_one: Block
+    via: PreviousHash
+  note: State diff for a block — Changes map plus Deletes list.
+- name: Transaction
+  schema: AElf.WebApp.Application.Chain.Dto.TransactionDto
+  created_by:
+  - POST /api/blockChain/rawTransaction (unsigned)
+  submitted_by:
+  - POST /api/blockChain/sendTransaction
+  - POST /api/blockChain/sendRawTransaction
+  - POST /api/blockChain/sendTransactions
+  - POST /api/blockChain/sendMultiTransaction
+  relationships:
+  - belongs_to: Account
+    via: From
+  - has_one: Contract
+    via: To
+  - references: Block
+    via: RefBlockNumber + RefBlockPrefix
+  note: >-
+    RefBlockNumber/RefBlockPrefix bind a transaction to a recent block, which is what bounds its
+    replay window — see the idempotency block in conventions/aelf-inc-conventions.yml.
+- name: TransactionResult
+  schema: AElf.WebApp.Application.Chain.Dto.TransactionResultDto
+  read_by:
+  - GET /api/blockChain/transactionResult
+  - GET /api/blockChain/transactionResults
+  - GET /api/blockChain/transactionResultWithBVP
+  relationships:
+  - belongs_to: Transaction
+    via: TransactionId
+  - has_one: Transaction
+    via: Transaction ($ref, embedded)
+  - belongs_to: Block
+    via: BlockHash + BlockNumber
+  - has_many: LogEvent
+    via: Logs ($ref array)
+- name: LogEvent
+  schema: AElf.WebApp.Application.Chain.Dto.LogEventDto
+  relationships:
+  - belongs_to: Contract
+    via: Address
+  note: Indexed/NonIndexed protobuf payloads; the aelf-command `event` verb decodes them.
+- name: MerklePath
+  schema: AElf.WebApp.Application.Chain.Dto.MerklePathDto
+  read_by:
+  - GET /api/blockChain/merklePathByTransactionId
+  relationships:
+  - belongs_to: Transaction
+    via: transactionId query parameter
+  - has_many: MerklePathNode
+    via: MerklePathNodes ($ref array)
+  note: The cross-chain verification primitive — proves a transaction to another chain.
+- name: TransactionFee
+  schema: AElf.WebApp.Application.Chain.Dto.CalculateTransactionFeeOutput
+  read_by:
+  - POST /api/blockChain/calculateTransactionFee
+  relationships:
+  - has_many: Fee
+    via: TransactionFees / ResourceFees ($ref FeeDto)
+- name: TransactionPoolStatus
+  schema: AElf.WebApp.Application.Chain.Dto.GetTransactionPoolStatusOutput
+  read_by:
+  - GET /api/blockChain/transactionPoolStatus
+- name: TaskQueue
+  schema: AElf.WebApp.Application.Chain.Dto.TaskQueueInfoDto
+  read_by:
+  - GET /api/blockChain/taskQueueStatus
+- name: Peer
+  schema: AElf.WebApp.Application.Net.Dto.PeerDto
+  read_by:
+  - GET /api/net/peers
+  managed_by:
+  - POST /api/net/peer
+  - DELETE /api/net/peer
+  relationships:
+  - has_many: RequestMetric
+    via: RequestMetrics ($ref array)
+- name: NetworkInfo
+  schema: AElf.WebApp.Application.Net.Dto.GetNetworkInfoOutput
+  read_by:
+  - GET /api/net/networkInfo
+- name: Contract
+  schema: null
+  description: >-
+    Contracts are first-class in aelf but have no DTO of their own in the Web API — they are
+    addressed by base58 address and described by a protobuf FileDescriptorSet.
+  read_by:
+  - GET /api/blockChain/contractFileDescriptorSet
+  invoked_by:
+  - POST /api/blockChain/executeTransaction (read-only)
+  - POST /api/blockChain/sendTransaction (state-changing)
+  external_contract: grpc/ (89 published .proto definitions; 7 saved here)
+counts:
+  schemas_in_spec: 81
+  provider_dtos: 27
+  framework_schemas: 54
+  note: >-
+    54 of the 81 component schemas belong to the ABP framework and Google.Protobuf well-known
+    types (Volo.Abp.*, Google.Protobuf.WellKnownTypes.Timestamp) rather than to aelf's domain. A
+    consumer reading the schema count as domain richness would be overcounting by two thirds.

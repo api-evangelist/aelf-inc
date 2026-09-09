@@ -1,18 +1,99 @@
 aid: aelf-inc
 name: Aelf
-description: 'Aelf is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: 'aelf (styled lowercase by the company, listed on the secondary market as
+  "Aelf Inc") is a Singapore-headquartered AI-enhanced, cloud-native layer-1 blockchain
+  network founded in 2017. It is written in C# with a modular multi-side-chain architecture,
+  parallel transaction execution and built-in cross-chain communication. Its public machine-readable
+  surface is the AElf node Web API — an OpenAPI 3.0.1 contract every node serves at
+  /swagger/v1/swagger.json and reachable anonymously on the public mainnet nodes — alongside
+  89 published protobuf contract definitions (the ACS contract standards, plus the gRPC
+  peer and cross-chain services), six first-party chain SDKs, the aelf-command CLI, and a
+  first-party agent layer of packaged Agent Skills and a local MCP server.'
 url: https://raw.githubusercontent.com/api-evangelist/aelf-inc/refs/heads/main/apis.yml
+image: https://docs.aelf.com/img/logo.svg
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
+x-tier: profiled
+x-tier-reason: enrichment-pipeline
+x-identity:
+  harvest_listing: https://forgeglobal.com/aelf-inc_stock/
+  resolved_to: aelf (aelf.com / github.com/AElfProject), Singapore, founded 2017
+  note: >-
+    The harvest row came from the Forge Global secondary-market listing
+    https://forgeglobal.com/aelf-inc_stock/ ("Aelf", Enterprise Software). That page sits behind a
+    Cloudflare interstitial and returned HTTP 403 to every fetch on 2026-09-09, so the mapping to
+    aelf was made from the company name and sector rather than by reading the listing itself. No
+    other company trading as "Aelf" was found. Every artifact in this repository was harvested from
+    aelf.com, docs.aelf.com, the *.aelf.io node hosts and the AElfProject GitHub organization —
+    never from the Forge page.
 specificationVersion: '0.20'
 created: '2026-09-09'
 modified: '2026-09-09'
 tags:
 - Company
-apis: []
+- Blockchain
+- Layer 1
+- Web3
+- Smart Contracts
+- Cross-Chain
+- Developer Tools
+- Protobuf
+- Agent Skills
+- Cryptocurrency
+apis:
+- name: aelf Node Web API
+  description: 'The AElf node Web API is the REST surface every aelf node exposes: chain status,
+    blocks, block state, transaction pool, transaction submission and results, merkle paths,
+    contract file descriptor sets, transaction fee calculation, and peer/network management.
+    24 operations across 23 paths, described by an OpenAPI 3.0.1 document the node itself serves
+    at /swagger/v1/swagger.json with a Swagger UI at /swagger/index.html. Reads are anonymous;
+    the two peer-management writes are documented as requiring HTTP Basic authentication.'
+  humanURL: https://docs.aelf.com/tools/web-api/
+  image: https://docs.aelf.com/img/logo.svg
+  baseURL: https://aelf-public-node.aelf.io
+  tags:
+  - Blockchain
+  - Layer 1
+  - Transactions
+  - Smart Contracts
+  properties:
+  - type: OpenAPI
+    url: openapi/aelf-inc-node-web-api-openapi.json
+  - type: Overlay
+    url: overlays/aelf-inc-node-web-api-overlay.yaml
+  - type: Documentation
+    url: https://docs.aelf.com/tools/web-api/
+  - type: APIReference
+    url: https://docs.aelf.com/tools/web-api/chain-api/
+  - type: Console
+    url: https://aelf-public-node.aelf.io/swagger/index.html
+  - type: ErrorCatalog
+    url: errors/aelf-inc-error-codes.yml
+  - type: DataModel
+    url: data-model/aelf-inc-data-model.yml
+- name: aelf Agent Gateway API
+  description: 'A first-party, self-hosted execution gateway that puts the aelf chain behind typed
+    OpenAPI/MCP tools for AI agents: chain and asset queries, EOA/CA wallet operations, an explicit
+    prepare -> human approval -> send workflow, exactly-once dispatch, and an audit log. Published
+    as source under the AElfProject GitHub organization with an OpenAPI 3.1.0 contract; the operator
+    runs it themselves, so its declared server is the loopback default rather than a hosted host.'
+  humanURL: https://github.com/AElfProject/aelf-agent-gateway
+  image: https://docs.aelf.com/img/logo.svg
+  baseURL: http://127.0.0.1:8787
+  x-base-note: 'Self-hosted product. The contract declares servers[0].url http://localhost:8787,
+    the documented default for a locally or privately run gateway. aelf operates no public instance,
+    so there is no production host to record; this is a genuinely local base, not a placeholder.'
+  tags:
+  - AI Agents
+  - Wallets
+  - Blockchain
+  properties:
+  - type: OpenAPI
+    url: openapi/aelf-inc-agent-gateway-openapi.yaml
+  - type: Overlay
+    url: overlays/aelf-inc-agent-gateway-overlay.yaml
+  - type: SourceCode
+    url: https://github.com/AElfProject/aelf-agent-gateway
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -20,4 +101,85 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
-  url: https://forgeglobal.com/aelf-inc_stock/
+  url: https://aelf.com/
+- type: DeveloperPortal
+  url: https://docs.aelf.com/
+- type: Documentation
+  url: https://docs.aelf.com/
+- type: APIReference
+  url: https://docs.aelf.com/tools/web-api/chain-api/
+- type: GettingStarted
+  url: https://docs.aelf.com/quick-start/
+- type: Blog
+  url: https://blog.aelf.com/
+- type: GitHubOrganization
+  url: https://github.com/AElfProject
+- type: Support
+  url: https://form.aelf.com/contact
+- type: TermsOfService
+  url: https://docs.aelf.com/legal/terms-of-use/
+- type: PrivacyPolicy
+  url: https://docs.aelf.com/legal/privacy-policy/
+- type: Roadmap
+  url: https://docs.aelf.com/resources/whitepaper-2/roadmap/
+- type: Protobuf
+  url: grpc/aelf-inc-peer-service.proto
+- type: Protobuf
+  url: grpc/aelf-inc-crosschain-rpc.proto
+- type: Protobuf
+  url: grpc/aelf-inc-acs20-standard-token.proto
+- type: Protobuf
+  url: grpc/aelf-inc-acs721-standard-nft.proto
+- type: Protobuf
+  url: grpc/aelf-inc-acs0-genesis.proto
+- type: Protobuf
+  url: grpc/aelf-inc-token-contract.proto
+- type: Protobuf
+  url: grpc/aelf-inc-core.proto
+- type: JSONSchema
+  url: json-schema/aelf-inc-wallet-context-v1.schema.json
+- type: Packages
+  url: packages/aelf-inc-packages.yml
+- type: SDKs
+  url: packages/aelf-inc-packages.yml
+- type: CLI
+  url: cli/aelf-inc-cli.yml
+- type: Components
+  url: components/aelf-inc-components.yml
+- type: MCPServer
+  url: mcp/aelf-inc-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/aelf-inc-tool-crosswalk.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/aelf-inc-llms.txt
+- type: Conventions
+  url: conventions/aelf-inc-conventions.yml
+- type: Idempotency
+  url: conventions/aelf-inc-conventions.yml
+- type: Authentication
+  url: authentication/aelf-inc-authentication.yml
+- type: Conformance
+  url: conformance/aelf-inc-conformance.yml
+- type: Lifecycle
+  url: lifecycle/aelf-inc-lifecycle.yml
+- type: ChangeLog
+  url: changelog/aelf-inc-changelog.yml
+- type: Sandbox
+  url: sandbox/aelf-inc-sandbox.yml
+- type: Plans
+  url: plans/aelf-inc-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/aelf-inc-rate-limits.yml
+- type: VulnerabilityDisclosure
+  url: security/aelf-inc-vulnerability-disclosure.yml
+- type: Security
+  url: https://github.com/AElfProject/.github/blob/master/SECURITY.md
+- type: DomainSecurity
+  url: security/aelf-inc-domain-security.yml
+x-enrichment:
+  date: '2026-09-09'
+  status: enriched
+  artifacts_added: 36
+  pass: local-v3

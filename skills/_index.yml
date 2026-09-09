@@ -1,0 +1,50 @@
+generated: '2026-09-09'
+method: searched
+source: >-
+  Provider-published Agent Skills in the AElfProject GitHub organization. Saved verbatim; nothing
+  in this directory was authored by API Evangelist.
+summary: >-
+  aelf publishes real, first-party Agent Skills — a routing/bootstrap hub skill and a node skill —
+  together with a machine-readable registry (skills-catalog.json, schemaVersion 1.3.0) covering
+  seven skills across the aelf ecosystem. Both files here carry the provider's own SKILL.md
+  frontmatter exactly as published.
+skills:
+- name: aelf-skills-hub
+  file: aelf-inc-aelf-skills-hub.md
+  source: https://raw.githubusercontent.com/AElfProject/aelf-skills/main/SKILL.md
+  repository: https://github.com/AElfProject/aelf-skills
+  method: searched
+  publisher: AElfProject
+  first_party: true
+  description: >-
+    Discovery, download, configuration and intent-routing hub for the whole aelf skill ecosystem;
+    bootstraps skills into Cursor, Claude Desktop, Claude Code, OpenClaw and Codex.
+- name: aelf-node-skill
+  file: aelf-inc-aelf-node-skill.md
+  source: https://raw.githubusercontent.com/AElfProject/aelf-node-skill/main/SKILL.md
+  repository: https://github.com/AElfProject/aelf-node-skill
+  method: searched
+  publisher: AElfProject
+  first_party: true
+  version: 0.1.3
+  api: openapi/aelf-inc-node-web-api-openapi.json
+  mcp: mcp/aelf-inc-mcp.yml
+  description: >-
+    Chain reads (status, block, transaction result, metadata), contract view calls and transaction
+    sending, fee estimation, and a node registry — usable via SDK, CLI, MCP or OpenClaw.
+registry:
+  file: aelf-inc-skills-catalog.json
+  source: https://raw.githubusercontent.com/AElfProject/aelf-skills/main/skills-catalog.json
+  schema_version: 1.3.0
+  generated_at: '2026-03-30'
+  skill_count: 7
+  first_party_count: 2
+  third_party_count: 5
+  note: >-
+    Five of the seven catalog entries are ecosystem projects owned by other GitHub organizations
+    (AelfScanProject, Awaken-Finance, eforest-finance, Portkey-Wallet, TomorrowDAOProject). They
+    are aelf-adjacent, not aelf-published, and are not counted as this provider's skills.
+generated_skills: []
+generated_skills_note: >-
+  API Evangelist authored NO skills for this provider. The provider ships its own, and a generated
+  skill would have sat next to a better one written by the people who run the chain.

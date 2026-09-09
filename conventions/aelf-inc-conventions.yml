@@ -1,0 +1,152 @@
+generated: '2026-09-09'
+method: derived
+source: >-
+  openapi/aelf-inc-node-web-api-openapi.json and openapi/aelf-inc-agent-gateway-openapi.yaml,
+  enriched from https://docs.aelf.com/tools/web-api/, https://docs.aelf.com/learn/transactions/ and
+  https://github.com/AElfProject/aelf-agent-gateway#readme
+summary: >-
+  Two very different conventions live in this record. The node Web API is a plain anonymous REST
+  surface with no versioning in the path, no pagination beyond an offset/limit pair on one
+  endpoint, no request-id header and no rate-limit signalling; its replay semantics come from the
+  chain, not from the HTTP layer. The self-hosted agent gateway, written a decade later, is the
+  opposite: bearer + delegated-JWT auth, an explicit prepare -> approve -> send workflow, and
+  exactly-once dispatch.
+authentication:
+  node_web_api:
+    default: none
+    note: >-
+      Every /api/blockChain operation, including the transaction-sending writes, is anonymous.
+      Authority comes from the signature inside the transaction, not from an HTTP credential.
+    basic_auth_operations:
+    - POST /api/net/peer
+    - DELETE /api/net/peer
+    docs: https://docs.aelf.com/tools/web-api/net-api/
+  agent_gateway:
+    scheme: http bearer (GatewayBearerAuth) plus a NyxID identity/delegation JWT in production
+    verified: signature, issuer, audience, scope and expiry
+  detail: authentication/aelf-inc-authentication.yml
+versioning:
+  strategy: none-in-path
+  detail: >-
+    No version segment in any URL. The OpenAPI document declares info.version "v1" and responses
+    are content-negotiated with a "; v=1.0" media-type suffix (application/json; v=1.0). Node
+    capability changes are versioned by chain release instead — the spec's own summary for
+    transactionResultWithBVP reads "available since V1.12.0", which is the only in-contract
+    version signal in the document.
+  release_channel: https://github.com/AElfProject/AElf/releases
+pagination:
+  style: offset-limit
+  scope: partial
+  params:
+    offset: 'integer, default 0'
+    limit: 'integer, default 10, maximum 100 (error 20007 above 100)'
+  operations:
+  - GET /api/blockChain/transactionResults
+  - GET /api/net/peers (no paging parameters)
+  response_fields: none
+  note: >-
+    Only transactionResults paginates. Collection-ish endpoints such as peers return an unbounded
+    array with no cursor, count or next link, so there is no way to page or resume them.
+field_expansion:
+  supported: true
+  mechanism: >-
+    Block reads take includeTransactions (boolean) to embed the block's transaction ids instead of
+    a second round trip. There is no generic expand/fields syntax.
+metadata:
+  supported: false
+request_tracing:
+  header: none
+  note: >-
+    The node returns no request-id or correlation header (verified against a live response from
+    aelf-public-node.aelf.io, whose only observability headers are cf-ray and cf-cache-status from
+    Cloudflare). The agent gateway issues its own operator-safe Trace ID, documented in its
+    SECURITY.md incident procedure.
+error_envelope:
+  shape: '{"Error": {"Code","Message","Details","Data","ValidationErrors"}}'
+  rfc9457: false
+  detail: errors/aelf-inc-error-codes.yml
+  warning: >-
+    Input-format errors are returned as HTTP 403 with a 200xx code in the body (observed
+    2026-09-09). Do not route on the status code.
+rate_limit_signaling:
+  headers: none
+  status_on_exhaustion: unknown
+  detail: rate-limits/aelf-inc-rate-limits.yml
+idempotency:
+  coverage: partial
+  scope:
+  - 'aelf Agent Gateway: POST /transfers/send (sendAelfTransfer) — accepts only a prepareId issued
+    by POST /transfers/prepare and approved by a human; the gateway holds an atomic claim and an
+    encrypted signed-transaction journal so a duplicate send cannot broadcast twice. The provider
+    tested this as its "duplicate-send flow" and its two-instance single-dispatch test.'
+  mechanism: prepare-token (single-use prepareId) with durable exactly-once dispatch
+  header: none
+  retention: not stated
+  source: https://github.com/AElfProject/aelf-agent-gateway#readme
+  note: >-
+    There is NO Idempotency-Key header anywhere, and the node Web API itself has no replay
+    protection at the HTTP layer: sendTransaction, sendRawTransaction, sendTransactions and
+    sendMultiTransaction accept whatever they are given. What protects a caller there is the chain
+    — a signed transaction has a deterministic TransactionId and a RefBlockNumber/RefBlockPrefix
+    window, so re-broadcasting the identical bytes cannot execute twice, while re-signing the same
+    intent produces a NEW transaction that will. That is chain semantics, not an API guarantee,
+    and it is why coverage is recorded as partial rather than full: the only operation with a
+    documented, tested replay guarantee is the gateway's send.
+reversibility:
+  grade: documented
+  summary: >-
+    On-chain writes are final. Nothing in the node Web API can cancel, refund, void or reverse a
+    transaction once it is broadcast and included in a block; there is no reversal operation to
+    point at, and no window inside which one would work. The only reversal surface aelf ships is
+    upstream of the chain, in the agent gateway, where a prepared transfer can be denied before it
+    is ever dispatched.
+  surfaces:
+  - surface: aelf Node Web API
+    write_operations:
+    - POST /api/blockChain/sendTransaction
+    - POST /api/blockChain/sendRawTransaction
+    - POST /api/blockChain/sendTransactions
+    - POST /api/blockChain/sendMultiTransaction
+    - POST /api/net/peer
+    - DELETE /api/net/peer
+    reversal_operation: null
+    window: null
+    reversible: false
+    note: >-
+      Irreversible by design. An agent must treat a successful send as permanent. The only
+      pre-flight rehearsal available is POST /api/blockChain/executeTransaction, a read-only
+      execution against current state, plus POST /api/blockChain/calculateTransactionFee for cost.
+      /api/net/peer add and remove are reversible in the ordinary sense — each undoes the other —
+      but they are node-operator controls, not user-facing state.
+  - surface: aelf Agent Gateway
+    write_operations:
+    - prepareAelfTransfer (POST /transfers/prepare)
+    - sendAelfTransfer (POST /transfers/send)
+    - decideAelfApproval (POST /approvals/{approvalId})
+    reversal_operation: decideAelfApproval
+    window: >-
+      Only while the prepared transfer is still pending approval and has not been dispatched. The
+      documented flow is prepare -> human approval -> send(prepareId only) -> polling; denying the
+      approval stops the transfer. No time-bounded expiry for a pending prepare is stated in the
+      published docs, so no duration is recorded here.
+    reversible: before-dispatch-only
+    source: https://github.com/AElfProject/aelf-agent-gateway#readme
+  dry_run_mode:
+    available: true
+    operations:
+    - POST /api/blockChain/executeTransaction (read-only execution of a contract method)
+    - POST /api/blockChain/executeRawTransaction
+    - POST /api/blockChain/calculateTransactionFee
+    note: >-
+      aelf's own skill guidance tells agents to "prefer simulate or read-only queries first when
+      available" — see skills/aelf-inc-aelf-node-skill.md.
+  grade_basis: >-
+    documented, not verified: a reversal path exists and is described (deny the approval before
+    dispatch), but no stated window — no expiry, no duration — accompanies it, and the chain
+    surface has no reversal at all.
+cross_links:
+  errors: errors/aelf-inc-error-codes.yml
+  lifecycle: lifecycle/aelf-inc-lifecycle.yml
+  authentication: authentication/aelf-inc-authentication.yml
+  rate_limits: rate-limits/aelf-inc-rate-limits.yml
+  conformance: conformance/aelf-inc-conformance.yml

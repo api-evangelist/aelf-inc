@@ -1,0 +1,81 @@
+generated: '2026-09-09'
+method: searched
+source: https://github.com/AElfProject/AElf/releases
+feed: https://github.com/AElfProject/AElf/releases.atom
+scheme: semver-ish node releases (vMAJOR.MINOR.PATCH), tagged and dated on GitHub
+current_version: v1.12.1
+current_version_date: '2026-09-02'
+summary: >-
+  There is no changelog page on aelf.com or docs.aelf.com. The dated record of change is the
+  GitHub release list for the node, which is genuine and current — ten releases are readable in
+  the feed, the newest from 2026-09-02 — but it describes node/protocol changes, not API changes,
+  and a consumer of the Web API has to infer the API impact themselves.
+entries:
+- version: v1.12.1
+  date: '2026-09-02'
+  breaking: false
+  highlights:
+  - Adds synthetic execution for transactions targeting an affected contract in the normal and
+    read-only execution paths.
+  url: https://github.com/AElfProject/AElf/releases/tag/v1.12.1
+- version: v1.12.0
+  date: '2025-01-14'
+  breaking: false
+  additions:
+  - New MultiTransaction type enabling simultaneous transfers to multiple target chains, which
+    surfaces in the API as POST /api/blockChain/sendMultiTransaction and error 20009.
+  - GET /api/blockChain/transactionResultWithBVP, marked in the spec as available since V1.12.0.
+  url: https://github.com/AElfProject/AElf/releases/tag/v1.12.0
+- version: v1.11.0
+  date: '2024-09-30'
+  breaking: false
+  highlights:
+  - Allow users to merge multiple transactions with multiple target chains into one transaction.
+  url: https://github.com/AElfProject/AElf/releases/tag/v1.11.0
+- version: v1.10.1
+  date: '2024-08-21'
+  breaking: false
+  highlights:
+  - Whitelist the groth16 and Poseidon libraries so contracts can execute zk-proof methods.
+  url: https://github.com/AElfProject/AElf/releases/tag/v1.10.1
+- version: v1.10.0
+  date: '2024-08-02'
+  breaking: false
+  highlights:
+  - Throughput (TPS) increase.
+  url: https://github.com/AElfProject/AElf/releases/tag/v1.10.0
+- version: v1.9.0
+  date: '2024-05-23'
+  breaking: false
+  highlights:
+  - Change CodeCheckProposalExpirationTimePeriod.
+  url: https://github.com/AElfProject/AElf/releases/tag/v1.9.0
+- version: v1.7.0
+  date: '2024-03-26'
+  breaking: false
+  highlights:
+  - Change MaximumProfitReceivingPeriodCount.
+  url: https://github.com/AElfProject/AElf/releases/tag/v1.7.0
+- version: v1.6.0
+  date: '2023-10-17'
+  breaking: false
+  highlights:
+  - Virtual-address transaction events.
+  - Deterministic addresses for contract deployment.
+  - AElf.Cryptography and AElf.Types support .NET Standard 2.1.
+  url: https://github.com/AElfProject/AElf/releases/tag/v1.6.0
+- version: v1.5.0
+  date: '2023-07-19'
+  breaking: false
+  highlights:
+  - Multi-currency transaction fees support parallel execution.
+  - Secondary delegate can pay transaction fees.
+  - Multiple tokens for threshold and free allowance.
+  url: https://github.com/AElfProject/AElf/releases/tag/v1.5.0
+- version: v1.4.1
+  date: '2023-07-07'
+  breaking: false
+  highlights:
+  - Optimise stream back-peer performance.
+  url: https://github.com/AElfProject/AElf/releases/tag/v1.4.1
+window: 10 most recent releases as published in the GitHub releases atom feed on 2026-09-09

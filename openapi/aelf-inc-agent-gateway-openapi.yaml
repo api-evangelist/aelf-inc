@@ -1,0 +1,487 @@
+openapi: 3.1.0
+info:
+  title: aelf Agent Gateway
+  version: 0.1.0
+  description: >
+    Secure aelf execution gateway exposed to NyxID as typed MCP tools.
+    Agent-facing operations never return private keys, mnemonics, raw keystores,
+    wallet passwords, Authorization headers, or NyxID delegation tokens.
+servers:
+  - url: http://localhost:8787
+security:
+  - GatewayBearerAuth: []
+tags:
+  - name: health
+  - name: chains
+  - name: wallets
+  - name: balances
+  - name: transfers
+  - name: approvals
+  - name: transactions
+  - name: explorer
+components:
+  securitySchemes:
+    GatewayBearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    ErrorEnvelope:
+      type: object
+      required: [ok, traceId, error]
+      properties:
+        ok:
+          type: boolean
+          const: false
+        traceId:
+          type: string
+        error:
+          type: object
+          required: [code, message, retriable]
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            retriable:
+              type: boolean
+            details:
+              type: object
+              additionalProperties: true
+    ChainId:
+      type: string
+      enum: [AELF, tDVV]
+    WalletType:
+      type: string
+      enum: [EOA, CA]
+    RiskLevel:
+      type: string
+      enum: [LOW, MEDIUM, HIGH, CRITICAL, FORBIDDEN]
+    WalletPublic:
+      type: object
+      required: [walletId, walletType, baseAddress, addresses, secretExported]
+      properties:
+        walletId:
+          type: string
+        walletType:
+          $ref: "#/components/schemas/WalletType"
+        label:
+          type: string
+        baseAddress:
+          type: string
+        addresses:
+          type: object
+          additionalProperties:
+            type: string
+        active:
+          type: boolean
+        secretExported:
+          type: boolean
+          const: false
+    Balance:
+      type: object
+      required: [chainId, address, symbol, amount, rawAmount, decimals]
+      properties:
+        chainId:
+          $ref: "#/components/schemas/ChainId"
+        address:
+          type: string
+        symbol:
+          type: string
+        amount:
+          type: string
+        rawAmount:
+          type: string
+        decimals:
+          type: integer
+    TransferPrepareRequest:
+      type: object
+      required: [fromWalletId, to, symbol, amount, chainId]
+      properties:
+        fromWalletId:
+          type: string
+        to:
+          type: string
+        symbol:
+          type: string
+          default: ELF
+        amount:
+          type: string
+          description: Human amount, e.g. "1.25".
+        chainId:
+          $ref: "#/components/schemas/ChainId"
+        memo:
+          type: string
+        idempotencyKey:
+          type: string
+    TransferIntent:
+      type: object
+      required:
+        - prepareId
+        - status
+        - from
+        - to
+        - symbol
+        - amount
+        - rawAmount
+        - chainId
+        - riskLevel
+        - approvalRequired
+        - expiresAt
+      properties:
+        prepareId:
+          type: string
+        status:
+          type: string
+          enum: [PENDING_APPROVAL, APPROVED, DENIED, EXPIRED, SENT, FAILED]
+        from:
+          type: string
+        to:
+          type: string
+        symbol:
+          type: string
+        amount:
+          type: string
+        rawAmount:
+          type: string
+        chainId:
+          $ref: "#/components/schemas/ChainId"
+        estimatedFee:
+          type: object
+          additionalProperties: true
+        riskLevel:
+          $ref: "#/components/schemas/RiskLevel"
+        approvalRequired:
+          type: boolean
+        approvalUrl:
+          type: string
+        expiresAt:
+          type: string
+          format: date-time
+    TransferSendResult:
+      type: object
+      required: [prepareId, status]
+      properties:
+        prepareId:
+          type: string
+        txId:
+          type: string
+        status:
+          type: string
+          enum: [SENT, TX_PENDING, CONFIRMED, FAILED]
+        chainId:
+          $ref: "#/components/schemas/ChainId"
+    ApprovalDecisionRequest:
+      type: object
+      required: [decision]
+      properties:
+        decision:
+          type: string
+          enum: [APPROVE, DENY]
+    AuditEventPublic:
+      type: object
+      required: [id, traceId, operationId, status, createdAt]
+      properties:
+        id:
+          type: string
+        traceId:
+          type: string
+        operationId:
+          type: string
+        walletId:
+          type: string
+        chainId:
+          $ref: "#/components/schemas/ChainId"
+        txId:
+          type: string
+        riskLevel:
+          $ref: "#/components/schemas/RiskLevel"
+        status:
+          type: string
+        errorCode:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+paths:
+  /health:
+    get:
+      tags: [health]
+      operationId: getAelfGatewayHealth
+      summary: Check aelf agent gateway health.
+      responses:
+        "200":
+          description: Gateway health.
+        default:
+          description: Error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorEnvelope"
+  /chains:
+    get:
+      tags: [chains]
+      operationId: getAelfChains
+      summary: List supported aelf chains.
+      responses:
+        "200":
+          description: Supported chains.
+  /wallets:
+    post:
+      tags: [wallets]
+      operationId: createAelfWallet
+      summary: Create encrypted local aelf wallet and return public metadata only.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                walletType:
+                  $ref: "#/components/schemas/WalletType"
+                  default: EOA
+                label:
+                  type: string
+                chainIds:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/ChainId"
+      responses:
+        "200":
+          description: Public wallet metadata.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WalletPublic"
+        default:
+          description: Error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorEnvelope"
+    get:
+      tags: [wallets]
+      operationId: listAelfWallets
+      summary: List public metadata for local aelf wallets.
+      responses:
+        "200":
+          description: Wallet list.
+  /wallets/{walletId}:
+    get:
+      tags: [wallets]
+      operationId: getAelfWallet
+      summary: Get public metadata for one wallet.
+      parameters:
+        - name: walletId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Wallet public metadata.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WalletPublic"
+  /balances:
+    get:
+      tags: [balances]
+      operationId: getAelfBalance
+      summary: Get token balance for a wallet or address.
+      parameters:
+        - name: walletId
+          in: query
+          schema:
+            type: string
+        - name: address
+          in: query
+          schema:
+            type: string
+        - name: symbol
+          in: query
+          schema:
+            type: string
+            default: ELF
+        - name: chainId
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/ChainId"
+      responses:
+        "200":
+          description: Balance.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Balance"
+  /transfers/prepare:
+    post:
+      tags: [transfers]
+      operationId: prepareAelfTransfer
+      summary: Validate and prepare an aelf token transfer without signing.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TransferPrepareRequest"
+      responses:
+        "200":
+          description: Transfer intent requiring approval.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransferIntent"
+  /transfers/send:
+    post:
+      tags: [transfers]
+      operationId: sendAelfTransfer
+      summary: Send a previously approved transfer intent.
+      description: This operation accepts only prepareId and never accepts replacement transfer parameters.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [prepareId]
+              additionalProperties: false
+              properties:
+                prepareId:
+                  type: string
+      responses:
+        "200":
+          description: Broadcast result.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransferSendResult"
+  /approvals/{approvalId}:
+    get:
+      tags: [approvals]
+      operationId: getAelfApproval
+      summary: Get local approval summary for a pending write operation.
+      parameters:
+        - name: approvalId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Approval summary.
+    post:
+      tags: [approvals]
+      operationId: decideAelfApproval
+      summary: Approve or deny a pending local approval.
+      parameters:
+        - name: approvalId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ApprovalDecisionRequest"
+      responses:
+        "200":
+          description: Approval decision result.
+  /transactions/{txId}:
+    get:
+      tags: [transactions]
+      operationId: getAelfTransactionResult
+      summary: Get aelf transaction result by transaction id.
+      parameters:
+        - name: txId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: chainId
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/ChainId"
+      responses:
+        "200":
+          description: Transaction result.
+  /explorer/search:
+    get:
+      tags: [explorer]
+      operationId: searchAelfscan
+      summary: Search AelfScan read-only data.
+      parameters:
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: chainId
+          in: query
+          schema:
+            $ref: "#/components/schemas/ChainId"
+      responses:
+        "200":
+          description: Explorer search result.
+  /explorer/address/{address}:
+    get:
+      tags: [explorer]
+      operationId: getAelfscanAddressDetail
+      summary: Get read-only AelfScan address detail.
+      parameters:
+        - name: address
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: chainId
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/ChainId"
+      responses:
+        "200":
+          description: Address detail from explorer.
+  /explorer/transactions/{txId}:
+    get:
+      tags: [explorer]
+      operationId: getAelfscanTransactionDetail
+      summary: Get read-only AelfScan transaction detail.
+      parameters:
+        - name: txId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: chainId
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/ChainId"
+      responses:
+        "200":
+          description: Transaction detail from explorer.
+  /admin/audit-events:
+    get:
+      tags: [admin]
+      operationId: listAelfAuditEvents
+      summary: List redacted audit events. Admin-only.
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 50
+      responses:
+        "200":
+          description: Redacted audit events.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AuditEventPublic"

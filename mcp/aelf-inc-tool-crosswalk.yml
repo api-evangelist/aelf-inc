@@ -1,0 +1,135 @@
+generated: '2026-09-09'
+method: derived
+source: >-
+  mcp/aelf-inc-node-skill-tools.json (the provider's own openclaw.json tool manifest, 11 tools)
+  bound to openapi/aelf-inc-node-web-api-openapi.json (AElf API, OpenAPI 3.0.1, 24 operations).
+summary: >-
+  The aelf node skill is a thin agent wrapper over the node Web API: nine of its eleven tools map
+  onto a single REST operation each, and the two that do not are local node-registry conveniences
+  with no chain-side equivalent. The important asymmetry runs the other way — 16 of the 24 REST
+  operations have no tool at all, including every raw/multi-transaction path, the merkle-path
+  endpoint used for cross-chain verification, and the whole /api/net surface.
+surfaces:
+- kind: openapi
+  name: aelf Node Web API
+  file: openapi/aelf-inc-node-web-api-openapi.json
+  endpoint: https://aelf-public-node.aelf.io
+  gated: false
+- kind: mcp
+  name: aelf-node-skill
+  file: mcp/aelf-inc-node-skill-tools.json
+  transport: stdio
+  endpoint: null
+  gated: false
+  note: >-
+    Local stdio server, no URL. Its published inputSchemas are empty permissive objects, so each
+    tool's REAL input contract is the one it inherits from the REST operation named below.
+- kind: openapi
+  name: aelf Agent Gateway
+  file: openapi/aelf-inc-agent-gateway-openapi.yaml
+  endpoint: http://127.0.0.1:8787
+  gated: false
+  note: >-
+    A second, separate agent surface. The gateway exposes its own 15 operations to agents as typed
+    tools through NyxID rather than through the node skill, so it is not crosswalked tool-by-tool
+    here; its operationIds are declared in its own contract.
+identifier_note: >-
+  The node Web API spec declares NO operationId on any of its 24 operations, so `rest:` rows below
+  carry `METHOD /path` instead. That is a defect in the published contract, not in this crosswalk:
+  an agent cannot address these operations by a stable name.
+crosswalk:
+- tool: aelf-get-chain-status
+  category: chain
+  rest:
+  - GET /api/blockChain/chainStatus
+  binding: one-to-one
+  confidence: high
+- tool: aelf-get-block-height
+  category: chain
+  rest:
+  - GET /api/blockChain/blockHeight
+  binding: one-to-one
+  confidence: high
+- tool: aelf-get-block
+  category: chain
+  rest:
+  - GET /api/blockChain/block
+  binding: one-to-one
+  confidence: high
+  note: Tool takes a block hash; the sibling REST operation blockByHeight has no tool.
+- tool: aelf-get-transaction-result
+  category: transactions
+  rest:
+  - GET /api/blockChain/transactionResult
+  binding: one-to-one
+  confidence: high
+- tool: aelf-get-contract-view-methods
+  category: contracts
+  rest:
+  - GET /api/blockChain/contractFileDescriptorSet
+  binding: derived
+  confidence: medium
+  note: >-
+    The tool lists a contract's view methods; the only REST source for that is the protobuf
+    FileDescriptorSet the node returns for a contract address, which the skill parses.
+- tool: aelf-get-system-contract-address
+  category: contracts
+  rest:
+  - POST /api/blockChain/executeTransaction
+  binding: composite
+  confidence: medium
+  note: >-
+    Resolved by a read-only call to the genesis contract (ACS0 GetContractAddressByName), which
+    travels over executeTransaction. There is no dedicated REST endpoint for it.
+- tool: aelf-call-contract-view
+  category: contracts
+  rest:
+  - POST /api/blockChain/executeTransaction
+  binding: one-to-one
+  confidence: high
+- tool: aelf-send-contract-transaction
+  category: contracts
+  rest:
+  - POST /api/blockChain/sendTransaction
+  binding: one-to-one
+  confidence: high
+  write: true
+- tool: aelf-estimate-transaction-fee
+  category: transactions
+  rest:
+  - POST /api/blockChain/calculateTransactionFee
+  binding: one-to-one
+  confidence: high
+  note: Provider describes it as "REST + SDK fallback", so the REST path is the primary binding.
+mcp_only:
+- tool: aelf-import-node
+  reason: >-
+    Manages the skill's own local node registry (import/update a node profile). Client-side state;
+    no chain-side operation exists.
+- tool: aelf-list-nodes
+  reason: Lists locally imported and built-in node profiles. Client-side state.
+rest_only:
+- GET /api/blockChain/blockByHeight
+- GET /api/blockChain/blockState
+- GET /api/blockChain/transactionPoolStatus
+- GET /api/blockChain/taskQueueStatus
+- POST /api/blockChain/executeRawTransaction
+- POST /api/blockChain/rawTransaction
+- POST /api/blockChain/sendRawTransaction
+- POST /api/blockChain/sendMultiTransaction
+- POST /api/blockChain/sendTransactions
+- GET /api/blockChain/transactionResultWithBVP
+- GET /api/blockChain/transactionResults
+- GET /api/blockChain/merklePathByTransactionId
+- POST /api/net/peer
+- DELETE /api/net/peer
+- GET /api/net/peers
+- GET /api/net/networkInfo
+coverage:
+  mcp_tools: 11
+  mcp_tools_mapped: 9
+  mcp_only_tools: 2
+  rest_operations: 24
+  rest_operations_covered: 8
+  rest_only_operations: 16
+  rest_coverage_pct: 33

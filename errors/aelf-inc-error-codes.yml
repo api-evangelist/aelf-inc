@@ -1,0 +1,90 @@
+generated: '2026-09-09'
+method: searched
+source: https://github.com/AElfProject/AElf/blob/dev/src/AElf.WebApp.Application.Chain/Error.cs
+sources:
+- https://raw.githubusercontent.com/AElfProject/AElf/dev/src/AElf.WebApp.Application.Chain/Error.cs
+- openapi/aelf-inc-node-web-api-openapi.json
+- live probe of https://aelf-public-node.aelf.io/api/blockChain/block?blockHash=zzz
+format: vendor
+rfc9457: false
+summary: >-
+  aelf publishes a numeric error-code registry for the node Web API in its own source
+  (Error.cs, the 200xx family) and returns it inside the ABP RemoteServiceErrorResponse envelope.
+  It is a genuine registry — thirteen codes with fixed messages — but it is discoverable only by
+  reading C# source: the OpenAPI declares 400/401/403/404/500/501 on every operation without ever
+  naming a code, and the API reference pages do not list them either.
+envelope:
+  shape: '{"Error": {"Code", "Message", "Details", "Data", "ValidationErrors"}}'
+  origin: ABP Framework RemoteServiceErrorResponse (Volo.Abp.Http.RemoteServiceErrorResponse)
+  schema_ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+  content_type: application/json
+  code_field: Error.Code
+  code_type: string-encoded integer (null for framework model-validation failures)
+  observed_example:
+    request: GET https://aelf-public-node.aelf.io/api/blockChain/block?blockHash=zzz
+    status: 403
+    body: '{"Error":{"Code":"20003","Message":"Invalid block hash format","Details":null,"Data":{},"ValidationErrors":null}}'
+    note: >-
+      OBSERVED 2026-09-09 and worth reading twice: a malformed block hash — a pure input-format
+      error — comes back as HTTP 403 Forbidden, not 400. The same is true of a malformed
+      transaction id (403, code 20004). An agent that routes on status codes will read these as
+      authorization failures and may go looking for credentials this anonymous API never wanted.
+      The status code is not a reliable signal here; the Error.Code field is.
+  validation_example:
+    request: GET https://aelf-public-node.aelf.io/api/blockChain/blockByHeight?blockHeight=abc
+    status: 400
+    body: '{"Error":{"Code":null,"Message":"Your request is not valid!","Details":"...","ValidationErrors":[{"Message":"The value ''abc'' is not valid.","Members":["blockHeight"]}]}}'
+error_codes:
+- code: '20001'
+  name: NotFound
+  message: Not found
+- code: '20002'
+  name: InvalidAddress
+  message: Invalid address format
+  remediation: Supply a base58 aelf address.
+- code: '20003'
+  name: InvalidBlockHash
+  message: Invalid block hash format
+  remediation: Supply a 64-character hex block hash.
+- code: '20004'
+  name: InvalidTransactionId
+  message: Invalid Transaction id format
+- code: '20006'
+  name: InvalidOffset
+  message: Offset must greater than or equal to 0
+- code: '20007'
+  name: InvalidLimit
+  message: Limit must between 0 and 100
+  remediation: Cap page size at 100 on transactionResults and peer listings.
+- code: '20008'
+  name: InvalidTransaction
+  message: Invalid transaction information
+- code: '20009'
+  name: InvalidXTransaction
+  message: Invalid multi-transaction information
+  note: Applies to sendMultiTransaction, added in AELF v1.12.0.
+- code: '20010'
+  name: InvalidContractAddress
+  message: Invalid contract address
+- code: '20011'
+  name: NoMatchMethodInContractAddress
+  message: No match method in contract address
+- code: '20012'
+  name: InvalidParams
+  message: Invalid params
+- code: '20013'
+  name: InvalidSignature
+  message: Invalid signature
+  remediation: Re-sign the raw transaction with the key that owns the From address.
+- code: '20014'
+  name: InvalidGatewaySignature
+  message: Invalid gateway signature
+error_code_count: 13
+gaps:
+- No code range 20005 is defined; the registry skips it.
+- >-
+  The OpenAPI attaches the same six response codes (400/401/403/404/500/501) to all 24 operations
+  with no per-operation semantics and no error examples.
+- >-
+  No published documentation page lists these codes. A consumer who does not read the C# source
+  cannot enumerate them.

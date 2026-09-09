@@ -1,0 +1,167 @@
+generated: '2026-09-09'
+method: probed
+source: live probes of /.well-known/ and /llms.txt on every host this record knows
+summary: >-
+  Nothing. Seven hosts x seven well-known paths were probed on 2026-09-09 and every single one
+  missed: no security.txt, no OIDC discovery, no RFC 8414 authorization-server metadata, no
+  api-catalog, no ai-plugin.json, and no A2A agent card at either the current or the legacy path.
+pointer_basis: >-
+  NO WellKnown pointer and NO SecurityTxt pointer are emitted in apis.yml. This file records a
+  measured absence, not a served surface. aelf does publish a vulnerability-disclosure policy, but
+  it lives in the AElfProject/.github repository, not at /.well-known/security.txt.
+false_positive_watch: >-
+  explorer.aelf.io answers HTTP 200 with the 550KB explorer SPA shell for /llms.txt (and would for
+  any unmatched path). That is a soft-200, recorded below as a miss. Any future round treating an
+  explorer.aelf.io 200 as a served document is wrong.
+hosts:
+- host: https://aelf.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+  note: Next.js app returns its 404 page (HTTP 404) for every unknown path.
+  checked: '2026-09-09'
+- host: https://www.aelf.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+  note: Same app as the apex.
+  checked: '2026-09-09'
+- host: https://docs.aelf.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+  note: Docusaurus 404 page.
+  checked: '2026-09-09'
+- host: https://aelf-public-node.aelf.io
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+  note: Node returns a bare 404 with no body.
+  checked: '2026-09-09'
+- host: https://tdvv-public-node.aelf.io
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+  note: Node returns a bare 404 with no body.
+  checked: '2026-09-09'
+- host: https://explorer.aelf.io
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /llms.txt
+    status: 200
+    note: >-
+      Soft-200. Body is the explorer single-page-app HTML shell (text/html, 560KB), not an
+      llms.txt document. Treated as a MISS.
+  note: SPA shell; see soft-200 warning below.
+  checked: '2026-09-09'
+- host: https://blog.aelf.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+  note: Same Next.js app as aelf.com.
+  checked: '2026-09-09'
+hosts_not_probed:
+- host: https://aelf-test-node.aelf.io
+  reason: >-
+    Testnet main-chain node answers HTTP 403 to every anonymous request, including
+    /api/blockChain/chainStatus, with a Kubernetes RBAC body ("User \"system:anonymous\" cannot
+    list resource"). Nothing under /.well-known/ is reachable to probe.
+- host: https://tdvw-test-node.aelf.io
+  reason: Host returned Cloudflare error 522 (origin connection timed out) at probe time.
