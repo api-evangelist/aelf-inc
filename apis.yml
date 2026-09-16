@@ -41,26 +41,16 @@ tags:
 - Agent Skills
 - Cryptocurrency
 apis:
-- name: aelf Node Web API
-  description: 'The AElf node Web API is the REST surface every aelf node exposes: chain status,
-    blocks, block state, transaction pool, transaction submission and results, merkle paths,
-    contract file descriptor sets, transaction fee calculation, and peer/network management.
-    24 operations across 23 paths, described by an OpenAPI 3.0.1 document the node itself serves
-    at /swagger/v1/swagger.json with a Swagger UI at /swagger/index.html. Reads are anonymous;
-    the two peer-management writes are documented as requiring HTTP Basic authentication.'
+- aid: aelf-inc:aelf-inc-admin-api
+  name: Aelf Admin API
+  description: The admin API from Aelf — 1 operation(s) for admin.
   humanURL: https://docs.aelf.com/tools/web-api/
-  image: https://docs.aelf.com/img/logo.svg
   baseURL: https://aelf-public-node.aelf.io
   tags:
-  - Blockchain
-  - Layer 1
-  - Transactions
-  - Smart Contracts
+  - admin
   properties:
   - type: OpenAPI
-    url: openapi/aelf-inc-node-web-api-openapi.json
-  - type: Overlay
-    url: overlays/aelf-inc-node-web-api-overlay.yaml
+    url: openapi/aelf-inc-admin-api-openapi.yml
   - type: Documentation
     url: https://docs.aelf.com/tools/web-api/
   - type: APIReference
@@ -71,27 +61,337 @@ apis:
     url: errors/aelf-inc-error-codes.yml
   - type: DataModel
     url: data-model/aelf-inc-data-model.yml
-- name: aelf Agent Gateway API
-  description: 'A first-party, self-hosted execution gateway that puts the aelf chain behind typed
-    OpenAPI/MCP tools for AI agents: chain and asset queries, EOA/CA wallet operations, an explicit
-    prepare -> human approval -> send workflow, exactly-once dispatch, and an audit log. Published
-    as source under the AElfProject GitHub organization with an OpenAPI 3.1.0 contract; the operator
-    runs it themselves, so its declared server is the loopback default rather than a hosted host.'
-  humanURL: https://github.com/AElfProject/aelf-agent-gateway
-  image: https://docs.aelf.com/img/logo.svg
-  baseURL: http://127.0.0.1:8787
-  x-base-note: 'Self-hosted product. The contract declares servers[0].url http://localhost:8787,
-    the documented default for a locally or privately run gateway. aelf operates no public instance,
-    so there is no production host to record; this is a genuinely local base, not a placeholder.'
+  - type: SourceCode
+    url: https://github.com/AElfProject/aelf-agent-gateway
+- aid: aelf-inc:aelf-inc-approvals-api
+  name: Aelf Approvals API
+  description: The approvals API from Aelf — 1 operation(s) for approvals.
+  humanURL: https://docs.aelf.com/tools/web-api/
+  baseURL: https://aelf-public-node.aelf.io
   tags:
-  - AI Agents
-  - Wallets
-  - Blockchain
+  - approvals
   properties:
   - type: OpenAPI
-    url: openapi/aelf-inc-agent-gateway-openapi.yaml
-  - type: Overlay
-    url: overlays/aelf-inc-agent-gateway-overlay.yaml
+    url: openapi/aelf-inc-approvals-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aelf.com/tools/web-api/
+  - type: APIReference
+    url: https://docs.aelf.com/tools/web-api/chain-api/
+  - type: Console
+    url: https://aelf-public-node.aelf.io/swagger/index.html
+  - type: ErrorCatalog
+    url: errors/aelf-inc-error-codes.yml
+  - type: DataModel
+    url: data-model/aelf-inc-data-model.yml
+  - type: SourceCode
+    url: https://github.com/AElfProject/aelf-agent-gateway
+- aid: aelf-inc:aelf-inc-balances-api
+  name: Aelf Balances API
+  description: The balances API from Aelf — 1 operation(s) for balances.
+  humanURL: https://docs.aelf.com/tools/web-api/
+  baseURL: https://aelf-public-node.aelf.io
+  tags:
+  - balances
+  properties:
+  - type: OpenAPI
+    url: openapi/aelf-inc-balances-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aelf.com/tools/web-api/
+  - type: APIReference
+    url: https://docs.aelf.com/tools/web-api/chain-api/
+  - type: Console
+    url: https://aelf-public-node.aelf.io/swagger/index.html
+  - type: ErrorCatalog
+    url: errors/aelf-inc-error-codes.yml
+  - type: DataModel
+    url: data-model/aelf-inc-data-model.yml
+  - type: SourceCode
+    url: https://github.com/AElfProject/aelf-agent-gateway
+- aid: aelf-inc:aelf-inc-blockchain-api
+  name: Aelf Block Chain API
+  description: The BlockChain API from Aelf — 5 operation(s) for blockchain.
+  humanURL: https://docs.aelf.com/tools/web-api/
+  baseURL: https://aelf-public-node.aelf.io
+  tags:
+  - BlockChain
+  properties:
+  - type: OpenAPI
+    url: openapi/aelf-inc-blockchain-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aelf.com/tools/web-api/
+  - type: APIReference
+    url: https://docs.aelf.com/tools/web-api/chain-api/
+  - type: Console
+    url: https://aelf-public-node.aelf.io/swagger/index.html
+  - type: ErrorCatalog
+    url: errors/aelf-inc-error-codes.yml
+  - type: DataModel
+    url: data-model/aelf-inc-data-model.yml
+  - type: SourceCode
+    url: https://github.com/AElfProject/aelf-agent-gateway
+- aid: aelf-inc:aelf-inc-chains-api
+  name: Aelf Chains API
+  description: The chains API from Aelf — 1 operation(s) for chains.
+  humanURL: https://docs.aelf.com/tools/web-api/
+  baseURL: https://aelf-public-node.aelf.io
+  tags:
+  - chains
+  properties:
+  - type: OpenAPI
+    url: openapi/aelf-inc-chains-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aelf.com/tools/web-api/
+  - type: APIReference
+    url: https://docs.aelf.com/tools/web-api/chain-api/
+  - type: Console
+    url: https://aelf-public-node.aelf.io/swagger/index.html
+  - type: ErrorCatalog
+    url: errors/aelf-inc-error-codes.yml
+  - type: DataModel
+    url: data-model/aelf-inc-data-model.yml
+  - type: SourceCode
+    url: https://github.com/AElfProject/aelf-agent-gateway
+- aid: aelf-inc:aelf-inc-chainstatus-api
+  name: Aelf Chain Status API
+  description: The ChainStatus API from Aelf — 1 operation(s) for chainstatus.
+  humanURL: https://docs.aelf.com/tools/web-api/
+  baseURL: https://aelf-public-node.aelf.io
+  tags:
+  - ChainStatus
+  properties:
+  - type: OpenAPI
+    url: openapi/aelf-inc-chainstatus-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aelf.com/tools/web-api/
+  - type: APIReference
+    url: https://docs.aelf.com/tools/web-api/chain-api/
+  - type: Console
+    url: https://aelf-public-node.aelf.io/swagger/index.html
+  - type: ErrorCatalog
+    url: errors/aelf-inc-error-codes.yml
+  - type: DataModel
+    url: data-model/aelf-inc-data-model.yml
+  - type: SourceCode
+    url: https://github.com/AElfProject/aelf-agent-gateway
+- aid: aelf-inc:aelf-inc-contractfiledescriptorset-api
+  name: Aelf Contract File Descriptor Set API
+  description: >-
+    The ContractFileDescriptorSet API from Aelf — 1 operation(s) for contractfiledescriptorset.
+  humanURL: https://docs.aelf.com/tools/web-api/
+  baseURL: https://aelf-public-node.aelf.io
+  tags:
+  - ContractFileDescriptorSet
+  properties:
+  - type: OpenAPI
+    url: openapi/aelf-inc-contractfiledescriptorset-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aelf.com/tools/web-api/
+  - type: APIReference
+    url: https://docs.aelf.com/tools/web-api/chain-api/
+  - type: Console
+    url: https://aelf-public-node.aelf.io/swagger/index.html
+  - type: ErrorCatalog
+    url: errors/aelf-inc-error-codes.yml
+  - type: DataModel
+    url: data-model/aelf-inc-data-model.yml
+  - type: SourceCode
+    url: https://github.com/AElfProject/aelf-agent-gateway
+- aid: aelf-inc:aelf-inc-explorer-api
+  name: Aelf Explorer API
+  description: The explorer API from Aelf — 3 operation(s) for explorer.
+  humanURL: https://docs.aelf.com/tools/web-api/
+  baseURL: https://aelf-public-node.aelf.io
+  tags:
+  - explorer
+  properties:
+  - type: OpenAPI
+    url: openapi/aelf-inc-explorer-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aelf.com/tools/web-api/
+  - type: APIReference
+    url: https://docs.aelf.com/tools/web-api/chain-api/
+  - type: Console
+    url: https://aelf-public-node.aelf.io/swagger/index.html
+  - type: ErrorCatalog
+    url: errors/aelf-inc-error-codes.yml
+  - type: DataModel
+    url: data-model/aelf-inc-data-model.yml
+  - type: SourceCode
+    url: https://github.com/AElfProject/aelf-agent-gateway
+- aid: aelf-inc:aelf-inc-health-api
+  name: Aelf Health API
+  description: The health API from Aelf — 1 operation(s) for health.
+  humanURL: https://docs.aelf.com/tools/web-api/
+  baseURL: https://aelf-public-node.aelf.io
+  tags:
+  - health
+  properties:
+  - type: OpenAPI
+    url: openapi/aelf-inc-health-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aelf.com/tools/web-api/
+  - type: APIReference
+    url: https://docs.aelf.com/tools/web-api/chain-api/
+  - type: Console
+    url: https://aelf-public-node.aelf.io/swagger/index.html
+  - type: ErrorCatalog
+    url: errors/aelf-inc-error-codes.yml
+  - type: DataModel
+    url: data-model/aelf-inc-data-model.yml
+  - type: SourceCode
+    url: https://github.com/AElfProject/aelf-agent-gateway
+- aid: aelf-inc:aelf-inc-net-api
+  name: Aelf Net API
+  description: The Net API from Aelf — 3 operation(s) for net.
+  humanURL: https://docs.aelf.com/tools/web-api/
+  baseURL: https://aelf-public-node.aelf.io
+  tags:
+  - Net
+  properties:
+  - type: OpenAPI
+    url: openapi/aelf-inc-net-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aelf.com/tools/web-api/
+  - type: APIReference
+    url: https://docs.aelf.com/tools/web-api/chain-api/
+  - type: Console
+    url: https://aelf-public-node.aelf.io/swagger/index.html
+  - type: ErrorCatalog
+    url: errors/aelf-inc-error-codes.yml
+  - type: DataModel
+    url: data-model/aelf-inc-data-model.yml
+  - type: SourceCode
+    url: https://github.com/AElfProject/aelf-agent-gateway
+- aid: aelf-inc:aelf-inc-taskqueuestatus-api
+  name: Aelf Task Queue Status API
+  description: The TaskQueueStatus API from Aelf — 1 operation(s) for taskqueuestatus.
+  humanURL: https://docs.aelf.com/tools/web-api/
+  baseURL: https://aelf-public-node.aelf.io
+  tags:
+  - TaskQueueStatus
+  properties:
+  - type: OpenAPI
+    url: openapi/aelf-inc-taskqueuestatus-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aelf.com/tools/web-api/
+  - type: APIReference
+    url: https://docs.aelf.com/tools/web-api/chain-api/
+  - type: Console
+    url: https://aelf-public-node.aelf.io/swagger/index.html
+  - type: ErrorCatalog
+    url: errors/aelf-inc-error-codes.yml
+  - type: DataModel
+    url: data-model/aelf-inc-data-model.yml
+  - type: SourceCode
+    url: https://github.com/AElfProject/aelf-agent-gateway
+- aid: aelf-inc:aelf-inc-transaction-api
+  name: Aelf Transaction API
+  description: The Transaction API from Aelf — 8 operation(s) for transaction.
+  humanURL: https://docs.aelf.com/tools/web-api/
+  baseURL: https://aelf-public-node.aelf.io
+  tags:
+  - Transaction
+  properties:
+  - type: OpenAPI
+    url: openapi/aelf-inc-transaction-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aelf.com/tools/web-api/
+  - type: APIReference
+    url: https://docs.aelf.com/tools/web-api/chain-api/
+  - type: Console
+    url: https://aelf-public-node.aelf.io/swagger/index.html
+  - type: ErrorCatalog
+    url: errors/aelf-inc-error-codes.yml
+  - type: DataModel
+    url: data-model/aelf-inc-data-model.yml
+  - type: SourceCode
+    url: https://github.com/AElfProject/aelf-agent-gateway
+- aid: aelf-inc:aelf-inc-transactionresult-api
+  name: Aelf Transaction Result API
+  description: The TransactionResult API from Aelf — 4 operation(s) for transactionresult.
+  humanURL: https://docs.aelf.com/tools/web-api/
+  baseURL: https://aelf-public-node.aelf.io
+  tags:
+  - TransactionResult
+  properties:
+  - type: OpenAPI
+    url: openapi/aelf-inc-transactionresult-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aelf.com/tools/web-api/
+  - type: APIReference
+    url: https://docs.aelf.com/tools/web-api/chain-api/
+  - type: Console
+    url: https://aelf-public-node.aelf.io/swagger/index.html
+  - type: ErrorCatalog
+    url: errors/aelf-inc-error-codes.yml
+  - type: DataModel
+    url: data-model/aelf-inc-data-model.yml
+  - type: SourceCode
+    url: https://github.com/AElfProject/aelf-agent-gateway
+- aid: aelf-inc:aelf-inc-transactions-api
+  name: Aelf Transactions API
+  description: The transactions API from Aelf — 1 operation(s) for transactions.
+  humanURL: https://docs.aelf.com/tools/web-api/
+  baseURL: https://aelf-public-node.aelf.io
+  tags:
+  - transactions
+  properties:
+  - type: OpenAPI
+    url: openapi/aelf-inc-transactions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aelf.com/tools/web-api/
+  - type: APIReference
+    url: https://docs.aelf.com/tools/web-api/chain-api/
+  - type: Console
+    url: https://aelf-public-node.aelf.io/swagger/index.html
+  - type: ErrorCatalog
+    url: errors/aelf-inc-error-codes.yml
+  - type: DataModel
+    url: data-model/aelf-inc-data-model.yml
+  - type: SourceCode
+    url: https://github.com/AElfProject/aelf-agent-gateway
+- aid: aelf-inc:aelf-inc-transfers-api
+  name: Aelf Transfers API
+  description: The transfers API from Aelf — 2 operation(s) for transfers.
+  humanURL: https://docs.aelf.com/tools/web-api/
+  baseURL: https://aelf-public-node.aelf.io
+  tags:
+  - transfers
+  properties:
+  - type: OpenAPI
+    url: openapi/aelf-inc-transfers-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aelf.com/tools/web-api/
+  - type: APIReference
+    url: https://docs.aelf.com/tools/web-api/chain-api/
+  - type: Console
+    url: https://aelf-public-node.aelf.io/swagger/index.html
+  - type: ErrorCatalog
+    url: errors/aelf-inc-error-codes.yml
+  - type: DataModel
+    url: data-model/aelf-inc-data-model.yml
+  - type: SourceCode
+    url: https://github.com/AElfProject/aelf-agent-gateway
+- aid: aelf-inc:aelf-inc-wallets-api
+  name: Aelf Wallets API
+  description: The wallets API from Aelf — 2 operation(s) for wallets.
+  humanURL: https://docs.aelf.com/tools/web-api/
+  baseURL: https://aelf-public-node.aelf.io
+  tags:
+  - wallets
+  properties:
+  - type: OpenAPI
+    url: openapi/aelf-inc-wallets-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aelf.com/tools/web-api/
+  - type: APIReference
+    url: https://docs.aelf.com/tools/web-api/chain-api/
+  - type: Console
+    url: https://aelf-public-node.aelf.io/swagger/index.html
+  - type: ErrorCatalog
+    url: errors/aelf-inc-error-codes.yml
+  - type: DataModel
+    url: data-model/aelf-inc-data-model.yml
   - type: SourceCode
     url: https://github.com/AElfProject/aelf-agent-gateway
 maintainers:
@@ -100,6 +400,10 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Overlay
+  url: overlays/aelf-inc-node-web-api-overlay.yaml
+- type: Overlay
+  url: overlays/aelf-inc-agent-gateway-overlay.yaml
 - type: Website
   url: https://aelf.com/
 - type: DeveloperPortal
