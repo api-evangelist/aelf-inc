@@ -1,0 +1,765 @@
+openapi: 3.2.0
+info:
+  title: AElf Block Chain API
+  version: v1
+tags:
+- name: Blockchain
+paths:
+  /api/blockChain/blockHeight:
+    get:
+      tags:
+      - Blockchain
+      summary: Get the height of the current chain
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain; v=1.0:
+              schema:
+                type: integer
+                format: int64
+            application/json; v=1.0:
+              schema:
+                type: integer
+                format: int64
+            text/json; v=1.0:
+              schema:
+                type: integer
+                format: int64
+            application/x-protobuf; v=1.0:
+              schema:
+                type: integer
+                format: int64
+        '403':
+          description: Forbidden
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '400':
+          description: Bad Request
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '501':
+          description: Server Error
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '500':
+          description: Server Error
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+      operationId: getApiBlockChainBlockHeight
+      x-operation-id-source: derived
+  /api/blockChain/block:
+    get:
+      tags:
+      - Blockchain
+      summary: Get information about a given block by block hash.
+      parameters:
+      - name: blockHash
+        in: query
+        description: block hash
+        schema:
+          type: string
+      - name: includeTransactions
+        in: query
+        description: include transactions or not
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/AElf.WebApp.Application.Chain.Dto.BlockDto'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/AElf.WebApp.Application.Chain.Dto.BlockDto'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/AElf.WebApp.Application.Chain.Dto.BlockDto'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/AElf.WebApp.Application.Chain.Dto.BlockDto'
+        '403':
+          description: Forbidden
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '400':
+          description: Bad Request
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '501':
+          description: Server Error
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '500':
+          description: Server Error
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+      operationId: getApiBlockChainBlock
+      x-operation-id-source: derived
+  /api/blockChain/blockByHeight:
+    get:
+      tags:
+      - Blockchain
+      summary: Get information about a given block by block height.
+      parameters:
+      - name: blockHeight
+        in: query
+        description: block height
+        schema:
+          type: integer
+          format: int64
+      - name: includeTransactions
+        in: query
+        description: include transactions or not
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/AElf.WebApp.Application.Chain.Dto.BlockDto'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/AElf.WebApp.Application.Chain.Dto.BlockDto'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/AElf.WebApp.Application.Chain.Dto.BlockDto'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/AElf.WebApp.Application.Chain.Dto.BlockDto'
+        '403':
+          description: Forbidden
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '400':
+          description: Bad Request
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '501':
+          description: Server Error
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '500':
+          description: Server Error
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+      operationId: getApiBlockChainBlockByHeight
+      x-operation-id-source: derived
+  /api/blockChain/transactionPoolStatus:
+    get:
+      tags:
+      - Blockchain
+      summary: Get the transaction pool status
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/AElf.WebApp.Application.Chain.Dto.GetTransactionPoolStatusOutput'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/AElf.WebApp.Application.Chain.Dto.GetTransactionPoolStatusOutput'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/AElf.WebApp.Application.Chain.Dto.GetTransactionPoolStatusOutput'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/AElf.WebApp.Application.Chain.Dto.GetTransactionPoolStatusOutput'
+        '403':
+          description: Forbidden
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '400':
+          description: Bad Request
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '501':
+          description: Server Error
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '500':
+          description: Server Error
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+      operationId: getApiBlockChainTransactionPoolStatus
+      x-operation-id-source: derived
+  /api/blockChain/blockState:
+    get:
+      tags:
+      - Blockchain
+      summary: Get the current state about a given block
+      parameters:
+      - name: blockHash
+        in: query
+        description: block hash
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/AElf.WebApp.Application.Chain.Dto.BlockStateDto'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/AElf.WebApp.Application.Chain.Dto.BlockStateDto'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/AElf.WebApp.Application.Chain.Dto.BlockStateDto'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/AElf.WebApp.Application.Chain.Dto.BlockStateDto'
+        '403':
+          description: Forbidden
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '400':
+          description: Bad Request
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '501':
+          description: Server Error
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '500':
+          description: Server Error
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+      operationId: getApiBlockChainBlockState
+      x-operation-id-source: derived
+components:
+  schemas:
+    AElf.WebApp.Application.Chain.Dto.BlockStateDto:
+      type: object
+      properties:
+        BlockHash:
+          type:
+          - string
+          - 'null'
+        PreviousHash:
+          type:
+          - string
+          - 'null'
+        BlockHeight:
+          type: integer
+          format: int64
+        Changes:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        Deletes:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+      additionalProperties: false
+    Volo.Abp.Http.RemoteServiceErrorInfo:
+      type: object
+      properties:
+        Code:
+          type:
+          - string
+          - 'null'
+        Message:
+          type:
+          - string
+          - 'null'
+        Details:
+          type:
+          - string
+          - 'null'
+        Data:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+        ValidationErrors:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceValidationErrorInfo'
+      additionalProperties: false
+    AElf.WebApp.Application.Chain.Dto.BlockHeaderDto:
+      type: object
+      properties:
+        PreviousBlockHash:
+          type:
+          - string
+          - 'null'
+        MerkleTreeRootOfTransactions:
+          type:
+          - string
+          - 'null'
+        MerkleTreeRootOfWorldState:
+          type:
+          - string
+          - 'null'
+        MerkleTreeRootOfTransactionState:
+          type:
+          - string
+          - 'null'
+        Extra:
+          type:
+          - string
+          - 'null'
+        Height:
+          type: integer
+          format: int64
+        Time:
+          type: string
+          format: date-time
+        ChainId:
+          type:
+          - string
+          - 'null'
+        Bloom:
+          type:
+          - string
+          - 'null'
+        SignerPubkey:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    Volo.Abp.Http.RemoteServiceErrorResponse:
+      type: object
+      properties:
+        Error:
+          $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorInfo'
+      additionalProperties: false
+    AElf.WebApp.Application.Chain.Dto.GetTransactionPoolStatusOutput:
+      type: object
+      properties:
+        Queued:
+          type: integer
+          format: int32
+        Validated:
+          type: integer
+          format: int32
+      additionalProperties: false
+    AElf.WebApp.Application.Chain.Dto.BlockBodyDto:
+      type: object
+      properties:
+        TransactionsCount:
+          type: integer
+          format: int32
+        Transactions:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+      additionalProperties: false
+    AElf.WebApp.Application.Chain.Dto.BlockDto:
+      type: object
+      properties:
+        BlockHash:
+          type:
+          - string
+          - 'null'
+        Header:
+          $ref: '#/components/schemas/AElf.WebApp.Application.Chain.Dto.BlockHeaderDto'
+        Body:
+          $ref: '#/components/schemas/AElf.WebApp.Application.Chain.Dto.BlockBodyDto'
+        BlockSize:
+          type: integer
+          format: int32
+      additionalProperties: false
+    Volo.Abp.Http.RemoteServiceValidationErrorInfo:
+      type: object
+      properties:
+        Message:
+          type:
+          - string
+          - 'null'
+        Members:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+      additionalProperties: false

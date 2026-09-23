@@ -1,0 +1,63 @@
+openapi: 3.2.0
+info:
+  title: aelf Agent Gateway Approvals API
+  version: 0.1.0
+  description: Secure aelf execution gateway exposed to NyxID as typed MCP tools. Agent-facing operations never return private keys, mnemonics, raw keystores, wallet passwords, Authorization headers, or NyxID delegation tokens.
+servers:
+- url: http://localhost:8787
+security:
+- GatewayBearerAuth: []
+tags:
+- name: Approvals
+paths:
+  /approvals/{approvalId}:
+    get:
+      tags:
+      - Approvals
+      operationId: getAelfApproval
+      summary: Get local approval summary for a pending write operation
+      parameters:
+      - name: approvalId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Approval summary.
+    post:
+      tags:
+      - Approvals
+      operationId: decideAelfApproval
+      summary: Approve or deny a pending local approval
+      parameters:
+      - name: approvalId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApprovalDecisionRequest'
+      responses:
+        '200':
+          description: Approval decision result.
+components:
+  schemas:
+    ApprovalDecisionRequest:
+      type: object
+      required:
+      - decision
+      properties:
+        decision:
+          type: string
+          enum:
+          - APPROVE
+          - DENY
+  securitySchemes:
+    GatewayBearerAuth:
+      type: http
+      scheme: bearer

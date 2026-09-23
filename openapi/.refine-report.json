@@ -1,0 +1,60 @@
+{
+  "provider": "aelf-inc",
+  "sources": [
+    "_original/aelf-inc-agent-gateway-openapi.yaml",
+    "_original/aelf-inc-node-web-api-openapi.json"
+  ],
+  "outputs": [
+    "aelf-inc-admin-api-openapi.yml",
+    "aelf-inc-approvals-api-openapi.yml",
+    "aelf-inc-balances-api-openapi.yml",
+    "aelf-inc-chains-api-openapi.yml",
+    "aelf-inc-explorer-api-openapi.yml",
+    "aelf-inc-health-api-openapi.yml",
+    "aelf-inc-transactions-api-openapi.yml",
+    "aelf-inc-transfers-api-openapi.yml",
+    "aelf-inc-wallets-api-openapi.yml",
+    "aelf-inc-blockchain-api-openapi.yml",
+    "aelf-inc-chainstatus-api-openapi.yml",
+    "aelf-inc-contractfiledescriptorset-api-openapi.yml",
+    "aelf-inc-net-api-openapi.yml",
+    "aelf-inc-taskqueuestatus-api-openapi.yml",
+    "aelf-inc-transaction-api-openapi.yml",
+    "aelf-inc-transactionresult-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "aelf-inc-agent-gateway-openapi.yaml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "aelf-inc-agent-gateway-openapi.yaml: declared missing tag: admin",
+    "aelf-inc-node-web-api-openapi.json: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "aelf-inc-node-web-api-openapi.json: declared missing tag: BlockChain",
+    "aelf-inc-node-web-api-openapi.json: declared missing tag: ChainStatus",
+    "aelf-inc-node-web-api-openapi.json: declared missing tag: ContractFileDescriptorSet",
+    "aelf-inc-node-web-api-openapi.json: declared missing tag: Net",
+    "aelf-inc-node-web-api-openapi.json: declared missing tag: TaskQueueStatus",
+    "aelf-inc-node-web-api-openapi.json: declared missing tag: Transaction",
+    "aelf-inc-node-web-api-openapi.json: declared missing tag: TransactionResult",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "aelf-inc-admin-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "aelf-inc-approvals-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "aelf-inc-balances-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "aelf-inc-blockchain-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "aelf-inc-chains-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "aelf-inc-chainstatus-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "aelf-inc-contractfiledescriptorset-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "aelf-inc-explorer-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "aelf-inc-health-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "aelf-inc-net-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "aelf-inc-taskqueuestatus-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "aelf-inc-transaction-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "aelf-inc-transactionresult-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "aelf-inc-transactions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "aelf-inc-transfers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "aelf-inc-wallets-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}

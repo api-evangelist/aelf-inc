@@ -1,0 +1,633 @@
+openapi: 3.2.0
+info:
+  title: AElf Net API
+  version: v1
+tags:
+- name: Net
+paths:
+  /api/net/peer:
+    post:
+      tags:
+      - Net
+      summary: Attempts to add a node to the connected network nodes
+      requestBody:
+        content:
+          application/json; v=1.0:
+            schema:
+              $ref: '#/components/schemas/AElf.WebApp.Application.Net.Dto.AddPeerInput'
+          text/json; v=1.0:
+            schema:
+              $ref: '#/components/schemas/AElf.WebApp.Application.Net.Dto.AddPeerInput'
+          application/*+json; v=1.0:
+            schema:
+              $ref: '#/components/schemas/AElf.WebApp.Application.Net.Dto.AddPeerInput'
+          application/x-protobuf; v=1.0:
+            schema:
+              $ref: '#/components/schemas/AElf.WebApp.Application.Net.Dto.AddPeerInput'
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain; v=1.0:
+              schema:
+                type: boolean
+            application/json; v=1.0:
+              schema:
+                type: boolean
+            text/json; v=1.0:
+              schema:
+                type: boolean
+            application/x-protobuf; v=1.0:
+              schema:
+                type: boolean
+        '403':
+          description: Forbidden
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '400':
+          description: Bad Request
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '501':
+          description: Server Error
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '500':
+          description: Server Error
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+      operationId: postApiNetPeer
+      x-operation-id-source: derived
+    delete:
+      tags:
+      - Net
+      summary: Attempts to remove a node from the connected network nodes
+      parameters:
+      - name: address
+        in: query
+        description: ip address
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain; v=1.0:
+              schema:
+                type: boolean
+            application/json; v=1.0:
+              schema:
+                type: boolean
+            text/json; v=1.0:
+              schema:
+                type: boolean
+            application/x-protobuf; v=1.0:
+              schema:
+                type: boolean
+        '403':
+          description: Forbidden
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '400':
+          description: Bad Request
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '501':
+          description: Server Error
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '500':
+          description: Server Error
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+      operationId: deleteApiNetPeer
+      x-operation-id-source: derived
+  /api/net/peers:
+    get:
+      tags:
+      - Net
+      summary: Get peer info about the connected network nodes
+      parameters:
+      - name: withMetrics
+        in: query
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain; v=1.0:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AElf.WebApp.Application.Net.Dto.PeerDto'
+            application/json; v=1.0:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AElf.WebApp.Application.Net.Dto.PeerDto'
+            text/json; v=1.0:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AElf.WebApp.Application.Net.Dto.PeerDto'
+            application/x-protobuf; v=1.0:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AElf.WebApp.Application.Net.Dto.PeerDto'
+        '403':
+          description: Forbidden
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '400':
+          description: Bad Request
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '501':
+          description: Server Error
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '500':
+          description: Server Error
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+      operationId: getApiNetPeers
+      x-operation-id-source: derived
+  /api/net/networkInfo:
+    get:
+      tags:
+      - Net
+      summary: Get information about the node’s connection to the network
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/AElf.WebApp.Application.Net.Dto.GetNetworkInfoOutput'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/AElf.WebApp.Application.Net.Dto.GetNetworkInfoOutput'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/AElf.WebApp.Application.Net.Dto.GetNetworkInfoOutput'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/AElf.WebApp.Application.Net.Dto.GetNetworkInfoOutput'
+        '403':
+          description: Forbidden
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '400':
+          description: Bad Request
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '501':
+          description: Server Error
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+        '500':
+          description: Server Error
+          content:
+            text/plain; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            text/json; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+            application/x-protobuf; v=1.0:
+              schema:
+                $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorResponse'
+      operationId: getApiNetNetworkInfo
+      x-operation-id-source: derived
+components:
+  schemas:
+    AElf.WebApp.Application.Net.Dto.GetNetworkInfoOutput:
+      type: object
+      properties:
+        Version:
+          type:
+          - string
+          - 'null'
+          description: node version
+        ProtocolVersion:
+          type: integer
+          description: network protocol version
+          format: int32
+        Connections:
+          type: integer
+          description: total number of open connections between this node and other nodes
+          format: int32
+      additionalProperties: false
+    Google.Protobuf.WellKnownTypes.Timestamp:
+      type: object
+      properties:
+        Seconds:
+          type: integer
+          format: int64
+        Nanos:
+          type: integer
+          format: int32
+      additionalProperties: false
+    Volo.Abp.Http.RemoteServiceErrorInfo:
+      type: object
+      properties:
+        Code:
+          type:
+          - string
+          - 'null'
+        Message:
+          type:
+          - string
+          - 'null'
+        Details:
+          type:
+          - string
+          - 'null'
+        Data:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+        ValidationErrors:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceValidationErrorInfo'
+      additionalProperties: false
+    AElf.WebApp.Application.Net.Dto.AddPeerInput:
+      type: object
+      properties:
+        Address:
+          type:
+          - string
+          - 'null'
+          description: ip address
+      additionalProperties: false
+    Volo.Abp.Http.RemoteServiceErrorResponse:
+      type: object
+      properties:
+        Error:
+          $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorInfo'
+      additionalProperties: false
+    AElf.OS.Network.Metrics.RequestMetric:
+      type: object
+      properties:
+        RoundTripTime:
+          type: integer
+          format: int64
+        MethodName:
+          type:
+          - string
+          - 'null'
+        Info:
+          type:
+          - string
+          - 'null'
+        RequestTime:
+          $ref: '#/components/schemas/Google.Protobuf.WellKnownTypes.Timestamp'
+      additionalProperties: false
+    AElf.WebApp.Application.Net.Dto.PeerDto:
+      type: object
+      properties:
+        IpAddress:
+          type:
+          - string
+          - 'null'
+        ProtocolVersion:
+          type: integer
+          format: int32
+        ConnectionTime:
+          type: integer
+          format: int64
+        ConnectionStatus:
+          type:
+          - string
+          - 'null'
+        Inbound:
+          type: boolean
+        BufferedTransactionsCount:
+          type: integer
+          format: int32
+        BufferedBlocksCount:
+          type: integer
+          format: int32
+        BufferedAnnouncementsCount:
+          type: integer
+          format: int32
+        RequestMetrics:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AElf.OS.Network.Metrics.RequestMetric'
+        NodeVersion:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    Volo.Abp.Http.RemoteServiceValidationErrorInfo:
+      type: object
+      properties:
+        Message:
+          type:
+          - string
+          - 'null'
+        Members:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+      additionalProperties: false
