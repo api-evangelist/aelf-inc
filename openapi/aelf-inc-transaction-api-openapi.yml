@@ -1036,32 +1036,19 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    AElf.WebApp.Application.Chain.Dto.SendTransactionInput:
+    Volo.Abp.Http.RemoteServiceValidationErrorInfo:
       type: object
       properties:
-        RawTransaction:
+        Message:
           type:
           - string
           - 'null'
-          description: raw transaction
-      additionalProperties: false
-    AElf.WebApp.Application.Chain.Dto.ExecuteTransactionDto:
-      type: object
-      properties:
-        RawTransaction:
+        Members:
           type:
-          - string
+          - array
           - 'null'
-          description: raw transaction
-      additionalProperties: false
-    AElf.WebApp.Application.Chain.Dto.CalculateTransactionFeeInput:
-      type: object
-      properties:
-        RawTransaction:
-          type:
-          - string
-          - 'null'
-          description: raw transaction
+          items:
+            type: string
       additionalProperties: false
     AElf.WebApp.Application.Chain.Dto.SendMultiTransactionInput:
       type: object
@@ -1080,130 +1067,15 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    AElf.WebApp.Application.Chain.Dto.SendTransactionsInput:
+    AElf.WebApp.Application.Chain.Dto.SendRawTransactionOutput:
       type: object
       properties:
-        RawTransactions:
+        TransactionId:
           type:
           - string
           - 'null'
-          description: raw transactions
-      additionalProperties: false
-    AElf.WebApp.Application.Chain.Dto.TransactionDto:
-      type: object
-      properties:
-        From:
-          type:
-          - string
-          - 'null'
-        To:
-          type:
-          - string
-          - 'null'
-        RefBlockNumber:
-          type: integer
-          format: int64
-        RefBlockPrefix:
-          type:
-          - string
-          - 'null'
-        MethodName:
-          type:
-          - string
-          - 'null'
-        Params:
-          type:
-          - string
-          - 'null'
-        Signature:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    AElf.WebApp.Application.Chain.Dto.ExecuteRawTransactionDto:
-      type: object
-      properties:
-        RawTransaction:
-          type:
-          - string
-          - 'null'
-          description: raw transaction
-        Signature:
-          type:
-          - string
-          - 'null'
-          description: signature
-      additionalProperties: false
-    Volo.Abp.Http.RemoteServiceErrorInfo:
-      type: object
-      properties:
-        Code:
-          type:
-          - string
-          - 'null'
-        Message:
-          type:
-          - string
-          - 'null'
-        Details:
-          type:
-          - string
-          - 'null'
-        Data:
-          type:
-          - object
-          - 'null'
-          additionalProperties: {}
-        ValidationErrors:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceValidationErrorInfo'
-      additionalProperties: false
-    AElf.WebApp.Application.Chain.Dto.SendMultiTransactionOutput:
-      type: object
-      properties:
-        TransactionIds:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-      additionalProperties: false
-    AElf.WebApp.Application.Chain.Dto.CalculateTransactionFeeOutput:
-      type: object
-      properties:
-        Success:
-          type: boolean
-        TransactionFee:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - integer
-            - 'null'
-            format: int64
-          deprecated: true
-        ResourceFee:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - integer
-            - 'null'
-            format: int64
-          deprecated: true
-        TransactionFees:
-          $ref: '#/components/schemas/AElf.WebApp.Application.Chain.Dto.FeeDto'
-        ResourceFees:
-          $ref: '#/components/schemas/AElf.WebApp.Application.Chain.Dto.FeeDto'
-        Error:
-          type:
-          - string
-          - 'null'
+        Transaction:
+          $ref: '#/components/schemas/AElf.WebApp.Application.Chain.Dto.TransactionDto'
       additionalProperties: false
     AElf.WebApp.Application.Chain.Dto.CreateRawTransactionInput:
       required:
@@ -1240,12 +1112,6 @@ components:
           type: string
           description: contract method parameters
       additionalProperties: false
-    Volo.Abp.Http.RemoteServiceErrorResponse:
-      type: object
-      properties:
-        Error:
-          $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorInfo'
-      additionalProperties: false
     AElf.WebApp.Application.Chain.Dto.FeeDto:
       type: object
       properties:
@@ -1263,15 +1129,121 @@ components:
             - 'null'
             format: int64
       additionalProperties: false
-    AElf.WebApp.Application.Chain.Dto.SendRawTransactionOutput:
+    Volo.Abp.Http.RemoteServiceErrorResponse:
       type: object
       properties:
-        TransactionId:
+        Error:
+          $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorInfo'
+      additionalProperties: false
+    AElf.WebApp.Application.Chain.Dto.CalculateTransactionFeeInput:
+      type: object
+      properties:
+        RawTransaction:
           type:
           - string
           - 'null'
-        Transaction:
-          $ref: '#/components/schemas/AElf.WebApp.Application.Chain.Dto.TransactionDto'
+          description: raw transaction
+      additionalProperties: false
+    AElf.WebApp.Application.Chain.Dto.ExecuteTransactionDto:
+      type: object
+      properties:
+        RawTransaction:
+          type:
+          - string
+          - 'null'
+          description: raw transaction
+      additionalProperties: false
+    AElf.WebApp.Application.Chain.Dto.CalculateTransactionFeeOutput:
+      type: object
+      properties:
+        Success:
+          type: boolean
+        TransactionFee:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - integer
+            - 'null'
+            format: int64
+          deprecated: true
+        ResourceFee:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - integer
+            - 'null'
+            format: int64
+          deprecated: true
+        TransactionFees:
+          $ref: '#/components/schemas/AElf.WebApp.Application.Chain.Dto.FeeDto'
+        ResourceFees:
+          $ref: '#/components/schemas/AElf.WebApp.Application.Chain.Dto.FeeDto'
+        Error:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    AElf.WebApp.Application.Chain.Dto.TransactionDto:
+      type: object
+      properties:
+        From:
+          type:
+          - string
+          - 'null'
+        To:
+          type:
+          - string
+          - 'null'
+        RefBlockNumber:
+          type: integer
+          format: int64
+        RefBlockPrefix:
+          type:
+          - string
+          - 'null'
+        MethodName:
+          type:
+          - string
+          - 'null'
+        Params:
+          type:
+          - string
+          - 'null'
+        Signature:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    Volo.Abp.Http.RemoteServiceErrorInfo:
+      type: object
+      properties:
+        Code:
+          type:
+          - string
+          - 'null'
+        Message:
+          type:
+          - string
+          - 'null'
+        Details:
+          type:
+          - string
+          - 'null'
+        Data:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+        ValidationErrors:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceValidationErrorInfo'
       additionalProperties: false
     AElf.WebApp.Application.Chain.Dto.SendRawTransactionInput:
       type: object
@@ -1290,6 +1262,15 @@ components:
           type: boolean
           description: return transaction detail or not
       additionalProperties: false
+    AElf.WebApp.Application.Chain.Dto.SendTransactionInput:
+      type: object
+      properties:
+        RawTransaction:
+          type:
+          - string
+          - 'null'
+          description: raw transaction
+      additionalProperties: false
     AElf.WebApp.Application.Chain.Dto.CreateRawTransactionOutput:
       type: object
       properties:
@@ -1298,17 +1279,36 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    Volo.Abp.Http.RemoteServiceValidationErrorInfo:
+    AElf.WebApp.Application.Chain.Dto.SendMultiTransactionOutput:
       type: object
       properties:
-        Message:
-          type:
-          - string
-          - 'null'
-        Members:
+        TransactionIds:
           type:
           - array
           - 'null'
           items:
             type: string
+      additionalProperties: false
+    AElf.WebApp.Application.Chain.Dto.SendTransactionsInput:
+      type: object
+      properties:
+        RawTransactions:
+          type:
+          - string
+          - 'null'
+          description: raw transactions
+      additionalProperties: false
+    AElf.WebApp.Application.Chain.Dto.ExecuteRawTransactionDto:
+      type: object
+      properties:
+        RawTransaction:
+          type:
+          - string
+          - 'null'
+          description: raw transaction
+        Signature:
+          type:
+          - string
+          - 'null'
+          description: signature
       additionalProperties: false

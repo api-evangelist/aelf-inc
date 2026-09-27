@@ -10,6 +10,22 @@ description: 'aelf (styled lowercase by the company, listed on the secondary mar
   peer and cross-chain services), six first-party chain SDKs, the aelf-command CLI, and a
   first-party agent layer of packaged Agent Skills and a local MCP server.'
 url: https://raw.githubusercontent.com/api-evangelist/aelf-inc/refs/heads/main/apis.yml
+deliveryModel:
+  model: saas
+  license_evidence:
+    not_product:
+    - aelfproject/aelf-agent-gateway
+  open_source: unknown
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: low
+  source:
+  - openapi
+  - pricing
+  - repository-not-product
+  generated: '2026-09-25'
+  method: derived
 image: https://docs.aelf.com/img/logo.svg
 x-type: company
 x-source: harvest:secondary-market

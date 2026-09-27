@@ -130,12 +130,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    Volo.Abp.Http.RemoteServiceErrorResponse:
-      type: object
-      properties:
-        Error:
-          $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorInfo'
-      additionalProperties: false
     Volo.Abp.Http.RemoteServiceValidationErrorInfo:
       type: object
       properties:
@@ -176,4 +170,10 @@ components:
           - 'null'
           items:
             $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceValidationErrorInfo'
+      additionalProperties: false
+    Volo.Abp.Http.RemoteServiceErrorResponse:
+      type: object
+      properties:
+        Error:
+          $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorInfo'
       additionalProperties: false

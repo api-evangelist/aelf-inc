@@ -33,6 +33,11 @@ paths:
                   $ref: '#/components/schemas/AuditEventPublic'
 components:
   schemas:
+    ChainId:
+      type: string
+      enum:
+      - AELF
+      - tDVV
     AuditEventPublic:
       type: object
       required:
@@ -71,11 +76,6 @@ components:
       - HIGH
       - CRITICAL
       - FORBIDDEN
-    ChainId:
-      type: string
-      enum:
-      - AELF
-      - tDVV
   securitySchemes:
     GatewayBearerAuth:
       type: http
