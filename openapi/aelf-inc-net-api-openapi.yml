@@ -492,19 +492,85 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    Volo.Abp.Http.RemoteServiceValidationErrorInfo:
+    AElf.OS.Network.Metrics.RequestMetric:
       type: object
       properties:
+        RoundTripTime:
+          type: integer
+          format: int64
+        MethodName:
+          type:
+          - string
+          - 'null'
+        Info:
+          type:
+          - string
+          - 'null'
+        RequestTime:
+          $ref: '#/components/schemas/Google.Protobuf.WellKnownTypes.Timestamp'
+      additionalProperties: false
+    Google.Protobuf.WellKnownTypes.Timestamp:
+      type: object
+      properties:
+        Seconds:
+          type: integer
+          format: int64
+        Nanos:
+          type: integer
+          format: int32
+      additionalProperties: false
+    Volo.Abp.Http.RemoteServiceErrorInfo:
+      type: object
+      properties:
+        Code:
+          type:
+          - string
+          - 'null'
         Message:
           type:
           - string
           - 'null'
-        Members:
+        Details:
+          type:
+          - string
+          - 'null'
+        Data:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+        ValidationErrors:
           type:
           - array
           - 'null'
           items:
-            type: string
+            $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceValidationErrorInfo'
+      additionalProperties: false
+    AElf.WebApp.Application.Net.Dto.AddPeerInput:
+      type: object
+      properties:
+        Address:
+          type:
+          - string
+          - 'null'
+          description: ip address
+      additionalProperties: false
+    AElf.WebApp.Application.Net.Dto.GetNetworkInfoOutput:
+      type: object
+      properties:
+        Version:
+          type:
+          - string
+          - 'null'
+          description: node version
+        ProtocolVersion:
+          type: integer
+          description: network protocol version
+          format: int32
+        Connections:
+          type: integer
+          description: total number of open connections between this node and other nodes
+          format: int32
       additionalProperties: false
     AElf.WebApp.Application.Net.Dto.PeerDto:
       type: object
@@ -545,89 +611,23 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    Google.Protobuf.WellKnownTypes.Timestamp:
+    Volo.Abp.Http.RemoteServiceValidationErrorInfo:
       type: object
       properties:
-        Seconds:
-          type: integer
-          format: int64
-        Nanos:
-          type: integer
-          format: int32
-      additionalProperties: false
-    AElf.WebApp.Application.Net.Dto.AddPeerInput:
-      type: object
-      properties:
-        Address:
+        Message:
           type:
           - string
           - 'null'
-          description: ip address
+        Members:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
       additionalProperties: false
     Volo.Abp.Http.RemoteServiceErrorResponse:
       type: object
       properties:
         Error:
           $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorInfo'
-      additionalProperties: false
-    Volo.Abp.Http.RemoteServiceErrorInfo:
-      type: object
-      properties:
-        Code:
-          type:
-          - string
-          - 'null'
-        Message:
-          type:
-          - string
-          - 'null'
-        Details:
-          type:
-          - string
-          - 'null'
-        Data:
-          type:
-          - object
-          - 'null'
-          additionalProperties: {}
-        ValidationErrors:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceValidationErrorInfo'
-      additionalProperties: false
-    AElf.WebApp.Application.Net.Dto.GetNetworkInfoOutput:
-      type: object
-      properties:
-        Version:
-          type:
-          - string
-          - 'null'
-          description: node version
-        ProtocolVersion:
-          type: integer
-          description: network protocol version
-          format: int32
-        Connections:
-          type: integer
-          description: total number of open connections between this node and other nodes
-          format: int32
-      additionalProperties: false
-    AElf.OS.Network.Metrics.RequestMetric:
-      type: object
-      properties:
-        RoundTripTime:
-          type: integer
-          format: int64
-        MethodName:
-          type:
-          - string
-          - 'null'
-        Info:
-          type:
-          - string
-          - 'null'
-        RequestTime:
-          $ref: '#/components/schemas/Google.Protobuf.WellKnownTypes.Timestamp'
       additionalProperties: false

@@ -44,11 +44,6 @@ paths:
                 $ref: '#/components/schemas/Balance'
 components:
   schemas:
-    ChainId:
-      type: string
-      enum:
-      - AELF
-      - tDVV
     Balance:
       type: object
       required:
@@ -71,6 +66,11 @@ components:
           type: string
         decimals:
           type: integer
+    ChainId:
+      type: string
+      enum:
+      - AELF
+      - tDVV
   securitySchemes:
     GatewayBearerAuth:
       type: http

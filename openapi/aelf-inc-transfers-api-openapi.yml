@@ -57,6 +57,58 @@ paths:
                 $ref: '#/components/schemas/TransferSendResult'
 components:
   schemas:
+    RiskLevel:
+      type: string
+      enum:
+      - LOW
+      - MEDIUM
+      - HIGH
+      - CRITICAL
+      - FORBIDDEN
+    TransferSendResult:
+      type: object
+      required:
+      - prepareId
+      - status
+      properties:
+        prepareId:
+          type: string
+        txId:
+          type: string
+        status:
+          type: string
+          enum:
+          - SENT
+          - TX_PENDING
+          - CONFIRMED
+          - FAILED
+        chainId:
+          $ref: '#/components/schemas/ChainId'
+    TransferPrepareRequest:
+      type: object
+      required:
+      - fromWalletId
+      - to
+      - symbol
+      - amount
+      - chainId
+      properties:
+        fromWalletId:
+          type: string
+        to:
+          type: string
+        symbol:
+          type: string
+          default: ELF
+        amount:
+          type: string
+          description: Human amount, e.g. "1.25".
+        chainId:
+          $ref: '#/components/schemas/ChainId'
+        memo:
+          type: string
+        idempotencyKey:
+          type: string
     TransferIntent:
       type: object
       required:
@@ -107,63 +159,11 @@ components:
         expiresAt:
           type: string
           format: date-time
-    RiskLevel:
-      type: string
-      enum:
-      - LOW
-      - MEDIUM
-      - HIGH
-      - CRITICAL
-      - FORBIDDEN
-    TransferPrepareRequest:
-      type: object
-      required:
-      - fromWalletId
-      - to
-      - symbol
-      - amount
-      - chainId
-      properties:
-        fromWalletId:
-          type: string
-        to:
-          type: string
-        symbol:
-          type: string
-          default: ELF
-        amount:
-          type: string
-          description: Human amount, e.g. "1.25".
-        chainId:
-          $ref: '#/components/schemas/ChainId'
-        memo:
-          type: string
-        idempotencyKey:
-          type: string
     ChainId:
       type: string
       enum:
       - AELF
       - tDVV
-    TransferSendResult:
-      type: object
-      required:
-      - prepareId
-      - status
-      properties:
-        prepareId:
-          type: string
-        txId:
-          type: string
-        status:
-          type: string
-          enum:
-          - SENT
-          - TX_PENDING
-          - CONFIRMED
-          - FAILED
-        chainId:
-          $ref: '#/components/schemas/ChainId'
   securitySchemes:
     GatewayBearerAuth:
       type: http

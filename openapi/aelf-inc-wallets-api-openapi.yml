@@ -74,11 +74,11 @@ paths:
                 $ref: '#/components/schemas/WalletPublic'
 components:
   schemas:
-    ChainId:
+    WalletType:
       type: string
       enum:
-      - AELF
-      - tDVV
+      - EOA
+      - CA
     ErrorEnvelope:
       type: object
       required:
@@ -107,11 +107,6 @@ components:
             details:
               type: object
               additionalProperties: true
-    WalletType:
-      type: string
-      enum:
-      - EOA
-      - CA
     WalletPublic:
       type: object
       required:
@@ -138,6 +133,11 @@ components:
         secretExported:
           type: boolean
           const: false
+    ChainId:
+      type: string
+      enum:
+      - AELF
+      - tDVV
   securitySchemes:
     GatewayBearerAuth:
       type: http

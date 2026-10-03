@@ -505,126 +505,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    Volo.Abp.Http.RemoteServiceValidationErrorInfo:
-      type: object
-      properties:
-        Message:
-          type:
-          - string
-          - 'null'
-        Members:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-      additionalProperties: false
-    AElf.WebApp.Application.Chain.Dto.MerklePathNodeDto:
-      type: object
-      properties:
-        Hash:
-          type:
-          - string
-          - 'null'
-        IsLeftChildNode:
-          type: boolean
-      additionalProperties: false
-    AElf.WebApp.Application.Chain.Dto.LogEventDto:
-      type: object
-      properties:
-        Address:
-          type:
-          - string
-          - 'null'
-        Name:
-          type:
-          - string
-          - 'null'
-        Indexed:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        NonIndexed:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    Volo.Abp.Http.RemoteServiceErrorResponse:
-      type: object
-      properties:
-        Error:
-          $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorInfo'
-      additionalProperties: false
-    AElf.WebApp.Application.Chain.Dto.TransactionDto:
-      type: object
-      properties:
-        From:
-          type:
-          - string
-          - 'null'
-        To:
-          type:
-          - string
-          - 'null'
-        RefBlockNumber:
-          type: integer
-          format: int64
-        RefBlockPrefix:
-          type:
-          - string
-          - 'null'
-        MethodName:
-          type:
-          - string
-          - 'null'
-        Params:
-          type:
-          - string
-          - 'null'
-        Signature:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    Volo.Abp.Http.RemoteServiceErrorInfo:
-      type: object
-      properties:
-        Code:
-          type:
-          - string
-          - 'null'
-        Message:
-          type:
-          - string
-          - 'null'
-        Details:
-          type:
-          - string
-          - 'null'
-        Data:
-          type:
-          - object
-          - 'null'
-          additionalProperties: {}
-        ValidationErrors:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceValidationErrorInfo'
-      additionalProperties: false
-    AElf.WebApp.Application.Chain.Dto.MerklePathDto:
-      type: object
-      properties:
-        MerklePathNodes:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/AElf.WebApp.Application.Chain.Dto.MerklePathNodeDto'
-      additionalProperties: false
     AElf.WebApp.Application.Chain.Dto.TransactionResultDto:
       type: object
       properties:
@@ -671,4 +551,124 @@ components:
         TransactionSize:
           type: integer
           format: int32
+      additionalProperties: false
+    AElf.WebApp.Application.Chain.Dto.LogEventDto:
+      type: object
+      properties:
+        Address:
+          type:
+          - string
+          - 'null'
+        Name:
+          type:
+          - string
+          - 'null'
+        Indexed:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        NonIndexed:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    AElf.WebApp.Application.Chain.Dto.MerklePathDto:
+      type: object
+      properties:
+        MerklePathNodes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AElf.WebApp.Application.Chain.Dto.MerklePathNodeDto'
+      additionalProperties: false
+    Volo.Abp.Http.RemoteServiceErrorInfo:
+      type: object
+      properties:
+        Code:
+          type:
+          - string
+          - 'null'
+        Message:
+          type:
+          - string
+          - 'null'
+        Details:
+          type:
+          - string
+          - 'null'
+        Data:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+        ValidationErrors:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceValidationErrorInfo'
+      additionalProperties: false
+    AElf.WebApp.Application.Chain.Dto.MerklePathNodeDto:
+      type: object
+      properties:
+        Hash:
+          type:
+          - string
+          - 'null'
+        IsLeftChildNode:
+          type: boolean
+      additionalProperties: false
+    AElf.WebApp.Application.Chain.Dto.TransactionDto:
+      type: object
+      properties:
+        From:
+          type:
+          - string
+          - 'null'
+        To:
+          type:
+          - string
+          - 'null'
+        RefBlockNumber:
+          type: integer
+          format: int64
+        RefBlockPrefix:
+          type:
+          - string
+          - 'null'
+        MethodName:
+          type:
+          - string
+          - 'null'
+        Params:
+          type:
+          - string
+          - 'null'
+        Signature:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    Volo.Abp.Http.RemoteServiceValidationErrorInfo:
+      type: object
+      properties:
+        Message:
+          type:
+          - string
+          - 'null'
+        Members:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+      additionalProperties: false
+    Volo.Abp.Http.RemoteServiceErrorResponse:
+      type: object
+      properties:
+        Error:
+          $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorInfo'
       additionalProperties: false
