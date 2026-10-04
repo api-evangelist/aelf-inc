@@ -74,11 +74,32 @@ paths:
                 $ref: '#/components/schemas/WalletPublic'
 components:
   schemas:
-    WalletType:
-      type: string
-      enum:
-      - EOA
-      - CA
+    WalletPublic:
+      type: object
+      required:
+      - walletId
+      - walletType
+      - baseAddress
+      - addresses
+      - secretExported
+      properties:
+        walletId:
+          type: string
+        walletType:
+          $ref: '#/components/schemas/WalletType'
+        label:
+          type: string
+        baseAddress:
+          type: string
+        addresses:
+          type: object
+          additionalProperties:
+            type: string
+        active:
+          type: boolean
+        secretExported:
+          type: boolean
+          const: false
     ErrorEnvelope:
       type: object
       required:
@@ -107,37 +128,16 @@ components:
             details:
               type: object
               additionalProperties: true
-    WalletPublic:
-      type: object
-      required:
-      - walletId
-      - walletType
-      - baseAddress
-      - addresses
-      - secretExported
-      properties:
-        walletId:
-          type: string
-        walletType:
-          $ref: '#/components/schemas/WalletType'
-        label:
-          type: string
-        baseAddress:
-          type: string
-        addresses:
-          type: object
-          additionalProperties:
-            type: string
-        active:
-          type: boolean
-        secretExported:
-          type: boolean
-          const: false
     ChainId:
       type: string
       enum:
       - AELF
       - tDVV
+    WalletType:
+      type: string
+      enum:
+      - EOA
+      - CA
   securitySchemes:
     GatewayBearerAuth:
       type: http

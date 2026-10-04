@@ -33,6 +33,19 @@ paths:
                   $ref: '#/components/schemas/AuditEventPublic'
 components:
   schemas:
+    RiskLevel:
+      type: string
+      enum:
+      - LOW
+      - MEDIUM
+      - HIGH
+      - CRITICAL
+      - FORBIDDEN
+    ChainId:
+      type: string
+      enum:
+      - AELF
+      - tDVV
     AuditEventPublic:
       type: object
       required:
@@ -63,19 +76,6 @@ components:
         createdAt:
           type: string
           format: date-time
-    RiskLevel:
-      type: string
-      enum:
-      - LOW
-      - MEDIUM
-      - HIGH
-      - CRITICAL
-      - FORBIDDEN
-    ChainId:
-      type: string
-      enum:
-      - AELF
-      - tDVV
   securitySchemes:
     GatewayBearerAuth:
       type: http

@@ -1036,7 +1036,51 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    AElf.WebApp.Application.Chain.Dto.SendTransactionInput:
+    AElf.WebApp.Application.Chain.Dto.FeeDto:
+      type: object
+      properties:
+        ChargingAddress:
+          type:
+          - string
+          - 'null'
+        Fee:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - integer
+            - 'null'
+            format: int64
+      additionalProperties: false
+    AElf.WebApp.Application.Chain.Dto.SendRawTransactionInput:
+      type: object
+      properties:
+        Transaction:
+          type:
+          - string
+          - 'null'
+          description: raw transaction
+        Signature:
+          type:
+          - string
+          - 'null'
+          description: signature
+        ReturnTransaction:
+          type: boolean
+          description: return transaction detail or not
+      additionalProperties: false
+    AElf.WebApp.Application.Chain.Dto.SendMultiTransactionOutput:
+      type: object
+      properties:
+        TransactionIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+      additionalProperties: false
+    AElf.WebApp.Application.Chain.Dto.CalculateTransactionFeeInput:
       type: object
       properties:
         RawTransaction:
@@ -1044,14 +1088,6 @@ components:
           - string
           - 'null'
           description: raw transaction
-      additionalProperties: false
-    AElf.WebApp.Application.Chain.Dto.SendTransactionOutput:
-      type: object
-      properties:
-        TransactionId:
-          type:
-          - string
-          - 'null'
       additionalProperties: false
     AElf.WebApp.Application.Chain.Dto.SendRawTransactionOutput:
       type: object
@@ -1106,14 +1142,11 @@ components:
           - 'null'
           description: raw transactions
       additionalProperties: false
-    AElf.WebApp.Application.Chain.Dto.SendMultiTransactionInput:
+    Volo.Abp.Http.RemoteServiceErrorResponse:
       type: object
       properties:
-        RawTransactions:
-          type:
-          - string
-          - 'null'
-          description: raw transactions
+        Error:
+          $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorInfo'
       additionalProperties: false
     Volo.Abp.Http.RemoteServiceErrorInfo:
       type: object
@@ -1142,24 +1175,52 @@ components:
           items:
             $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceValidationErrorInfo'
       additionalProperties: false
-    AElf.WebApp.Application.Chain.Dto.FeeDto:
+    AElf.WebApp.Application.Chain.Dto.TransactionDto:
       type: object
       properties:
-        ChargingAddress:
+        From:
           type:
           - string
           - 'null'
-        Fee:
+        To:
           type:
-          - object
+          - string
           - 'null'
-          additionalProperties:
-            type:
-            - integer
-            - 'null'
-            format: int64
+        RefBlockNumber:
+          type: integer
+          format: int64
+        RefBlockPrefix:
+          type:
+          - string
+          - 'null'
+        MethodName:
+          type:
+          - string
+          - 'null'
+        Params:
+          type:
+          - string
+          - 'null'
+        Signature:
+          type:
+          - string
+          - 'null'
       additionalProperties: false
-    AElf.WebApp.Application.Chain.Dto.CalculateTransactionFeeInput:
+    AElf.WebApp.Application.Chain.Dto.ExecuteRawTransactionDto:
+      type: object
+      properties:
+        RawTransaction:
+          type:
+          - string
+          - 'null'
+          description: raw transaction
+        Signature:
+          type:
+          - string
+          - 'null'
+          description: signature
+      additionalProperties: false
+    AElf.WebApp.Application.Chain.Dto.ExecuteTransactionDto:
       type: object
       properties:
         RawTransaction:
@@ -1168,15 +1229,16 @@ components:
           - 'null'
           description: raw transaction
       additionalProperties: false
-    AElf.WebApp.Application.Chain.Dto.CreateRawTransactionOutput:
+    AElf.WebApp.Application.Chain.Dto.SendMultiTransactionInput:
       type: object
       properties:
-        RawTransaction:
+        RawTransactions:
           type:
           - string
           - 'null'
+          description: raw transactions
       additionalProperties: false
-    AElf.WebApp.Application.Chain.Dto.ExecuteTransactionDto:
+    AElf.WebApp.Application.Chain.Dto.SendTransactionInput:
       type: object
       properties:
         RawTransaction:
@@ -1220,47 +1282,18 @@ components:
           type: string
           description: contract method parameters
       additionalProperties: false
-    AElf.WebApp.Application.Chain.Dto.ExecuteRawTransactionDto:
+    AElf.WebApp.Application.Chain.Dto.SendTransactionOutput:
+      type: object
+      properties:
+        TransactionId:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    AElf.WebApp.Application.Chain.Dto.CreateRawTransactionOutput:
       type: object
       properties:
         RawTransaction:
-          type:
-          - string
-          - 'null'
-          description: raw transaction
-        Signature:
-          type:
-          - string
-          - 'null'
-          description: signature
-      additionalProperties: false
-    AElf.WebApp.Application.Chain.Dto.TransactionDto:
-      type: object
-      properties:
-        From:
-          type:
-          - string
-          - 'null'
-        To:
-          type:
-          - string
-          - 'null'
-        RefBlockNumber:
-          type: integer
-          format: int64
-        RefBlockPrefix:
-          type:
-          - string
-          - 'null'
-        MethodName:
-          type:
-          - string
-          - 'null'
-        Params:
-          type:
-          - string
-          - 'null'
-        Signature:
           type:
           - string
           - 'null'
@@ -1273,39 +1306,6 @@ components:
           - string
           - 'null'
         Members:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-      additionalProperties: false
-    AElf.WebApp.Application.Chain.Dto.SendRawTransactionInput:
-      type: object
-      properties:
-        Transaction:
-          type:
-          - string
-          - 'null'
-          description: raw transaction
-        Signature:
-          type:
-          - string
-          - 'null'
-          description: signature
-        ReturnTransaction:
-          type: boolean
-          description: return transaction detail or not
-      additionalProperties: false
-    Volo.Abp.Http.RemoteServiceErrorResponse:
-      type: object
-      properties:
-        Error:
-          $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorInfo'
-      additionalProperties: false
-    AElf.WebApp.Application.Chain.Dto.SendMultiTransactionOutput:
-      type: object
-      properties:
-        TransactionIds:
           type:
           - array
           - 'null'

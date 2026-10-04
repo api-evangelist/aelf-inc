@@ -505,6 +505,16 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    AElf.WebApp.Application.Chain.Dto.MerklePathNodeDto:
+      type: object
+      properties:
+        Hash:
+          type:
+          - string
+          - 'null'
+        IsLeftChildNode:
+          type: boolean
+      additionalProperties: false
     AElf.WebApp.Application.Chain.Dto.TransactionResultDto:
       type: object
       properties:
@@ -574,15 +584,11 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    AElf.WebApp.Application.Chain.Dto.MerklePathDto:
+    Volo.Abp.Http.RemoteServiceErrorResponse:
       type: object
       properties:
-        MerklePathNodes:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/AElf.WebApp.Application.Chain.Dto.MerklePathNodeDto'
+        Error:
+          $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorInfo'
       additionalProperties: false
     Volo.Abp.Http.RemoteServiceErrorInfo:
       type: object
@@ -610,16 +616,6 @@ components:
           - 'null'
           items:
             $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceValidationErrorInfo'
-      additionalProperties: false
-    AElf.WebApp.Application.Chain.Dto.MerklePathNodeDto:
-      type: object
-      properties:
-        Hash:
-          type:
-          - string
-          - 'null'
-        IsLeftChildNode:
-          type: boolean
       additionalProperties: false
     AElf.WebApp.Application.Chain.Dto.TransactionDto:
       type: object
@@ -652,6 +648,16 @@ components:
           - string
           - 'null'
       additionalProperties: false
+    AElf.WebApp.Application.Chain.Dto.MerklePathDto:
+      type: object
+      properties:
+        MerklePathNodes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AElf.WebApp.Application.Chain.Dto.MerklePathNodeDto'
+      additionalProperties: false
     Volo.Abp.Http.RemoteServiceValidationErrorInfo:
       type: object
       properties:
@@ -665,10 +671,4 @@ components:
           - 'null'
           items:
             type: string
-      additionalProperties: false
-    Volo.Abp.Http.RemoteServiceErrorResponse:
-      type: object
-      properties:
-        Error:
-          $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorInfo'
       additionalProperties: false

@@ -607,6 +607,16 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    AElf.WebApp.Application.Chain.Dto.GetTransactionPoolStatusOutput:
+      type: object
+      properties:
+        Queued:
+          type: integer
+          format: int32
+        Validated:
+          type: integer
+          format: int32
+      additionalProperties: false
     Volo.Abp.Http.RemoteServiceErrorResponse:
       type: object
       properties:
@@ -640,16 +650,6 @@ components:
           items:
             $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceValidationErrorInfo'
       additionalProperties: false
-    AElf.WebApp.Application.Chain.Dto.GetTransactionPoolStatusOutput:
-      type: object
-      properties:
-        Queued:
-          type: integer
-          format: int32
-        Validated:
-          type: integer
-          format: int32
-      additionalProperties: false
     AElf.WebApp.Application.Chain.Dto.BlockDto:
       type: object
       properties:
@@ -664,6 +664,19 @@ components:
         BlockSize:
           type: integer
           format: int32
+      additionalProperties: false
+    AElf.WebApp.Application.Chain.Dto.BlockBodyDto:
+      type: object
+      properties:
+        TransactionsCount:
+          type: integer
+          format: int32
+        Transactions:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
       additionalProperties: false
     AElf.WebApp.Application.Chain.Dto.BlockHeaderDto:
       type: object
@@ -707,33 +720,6 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    AElf.WebApp.Application.Chain.Dto.BlockBodyDto:
-      type: object
-      properties:
-        TransactionsCount:
-          type: integer
-          format: int32
-        Transactions:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-      additionalProperties: false
-    Volo.Abp.Http.RemoteServiceValidationErrorInfo:
-      type: object
-      properties:
-        Message:
-          type:
-          - string
-          - 'null'
-        Members:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-      additionalProperties: false
     AElf.WebApp.Application.Chain.Dto.BlockStateDto:
       type: object
       properties:
@@ -757,6 +743,20 @@ components:
             - string
             - 'null'
         Deletes:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+      additionalProperties: false
+    Volo.Abp.Http.RemoteServiceValidationErrorInfo:
+      type: object
+      properties:
+        Message:
+          type:
+          - string
+          - 'null'
+        Members:
           type:
           - array
           - 'null'
