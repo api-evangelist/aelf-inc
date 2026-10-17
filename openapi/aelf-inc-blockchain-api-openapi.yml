@@ -623,6 +623,21 @@ components:
         Error:
           $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorInfo'
       additionalProperties: false
+    AElf.WebApp.Application.Chain.Dto.BlockDto:
+      type: object
+      properties:
+        BlockHash:
+          type:
+          - string
+          - 'null'
+        Header:
+          $ref: '#/components/schemas/AElf.WebApp.Application.Chain.Dto.BlockHeaderDto'
+        Body:
+          $ref: '#/components/schemas/AElf.WebApp.Application.Chain.Dto.BlockBodyDto'
+        BlockSize:
+          type: integer
+          format: int32
+      additionalProperties: false
     Volo.Abp.Http.RemoteServiceErrorInfo:
       type: object
       properties:
@@ -650,28 +665,43 @@ components:
           items:
             $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceValidationErrorInfo'
       additionalProperties: false
-    AElf.WebApp.Application.Chain.Dto.BlockDto:
+    Volo.Abp.Http.RemoteServiceValidationErrorInfo:
+      type: object
+      properties:
+        Message:
+          type:
+          - string
+          - 'null'
+        Members:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+      additionalProperties: false
+    AElf.WebApp.Application.Chain.Dto.BlockStateDto:
       type: object
       properties:
         BlockHash:
           type:
           - string
           - 'null'
-        Header:
-          $ref: '#/components/schemas/AElf.WebApp.Application.Chain.Dto.BlockHeaderDto'
-        Body:
-          $ref: '#/components/schemas/AElf.WebApp.Application.Chain.Dto.BlockBodyDto'
-        BlockSize:
+        PreviousHash:
+          type:
+          - string
+          - 'null'
+        BlockHeight:
           type: integer
-          format: int32
-      additionalProperties: false
-    AElf.WebApp.Application.Chain.Dto.BlockBodyDto:
-      type: object
-      properties:
-        TransactionsCount:
-          type: integer
-          format: int32
-        Transactions:
+          format: int64
+        Changes:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        Deletes:
           type:
           - array
           - 'null'
@@ -720,43 +750,13 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    AElf.WebApp.Application.Chain.Dto.BlockStateDto:
+    AElf.WebApp.Application.Chain.Dto.BlockBodyDto:
       type: object
       properties:
-        BlockHash:
-          type:
-          - string
-          - 'null'
-        PreviousHash:
-          type:
-          - string
-          - 'null'
-        BlockHeight:
+        TransactionsCount:
           type: integer
-          format: int64
-        Changes:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - string
-            - 'null'
-        Deletes:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-      additionalProperties: false
-    Volo.Abp.Http.RemoteServiceValidationErrorInfo:
-      type: object
-      properties:
-        Message:
-          type:
-          - string
-          - 'null'
-        Members:
+          format: int32
+        Transactions:
           type:
           - array
           - 'null'

@@ -129,11 +129,16 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    Volo.Abp.Http.RemoteServiceErrorResponse:
+    AElf.WebApp.Application.Chain.Dto.TaskQueueInfoDto:
       type: object
       properties:
-        Error:
-          $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorInfo'
+        Name:
+          type:
+          - string
+          - 'null'
+        Size:
+          type: integer
+          format: int32
       additionalProperties: false
     Volo.Abp.Http.RemoteServiceValidationErrorInfo:
       type: object
@@ -149,16 +154,11 @@ components:
           items:
             type: string
       additionalProperties: false
-    AElf.WebApp.Application.Chain.Dto.TaskQueueInfoDto:
+    Volo.Abp.Http.RemoteServiceErrorResponse:
       type: object
       properties:
-        Name:
-          type:
-          - string
-          - 'null'
-        Size:
-          type: integer
-          format: int32
+        Error:
+          $ref: '#/components/schemas/Volo.Abp.Http.RemoteServiceErrorInfo'
       additionalProperties: false
     Volo.Abp.Http.RemoteServiceErrorInfo:
       type: object
