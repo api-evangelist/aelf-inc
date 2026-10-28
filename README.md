@@ -64,21 +64,140 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-aelf (styled lowercase by the company; listed on the secondary market as "Aelf Inc") is a
-Singapore-headquartered, AI-enhanced cloud-native layer-1 blockchain network founded in 2017.
-It is written in C# with a modular multi-side-chain architecture, parallel transaction execution
-and built-in cross-chain communication.
+aelf (styled lowercase by the company, listed on the secondary market as "Aelf Inc") is a Singapore-headquartered AI-enhanced, cloud-native layer-1 blockchain network founded in 2017. It is written in C# with a modular multi-side-chain architecture, parallel transaction execution and built-in cross-chain communication. Its public machine-readable surface is the AElf node Web API — an OpenAPI 3.0.1 contract every node serves at /swagger/v1/swagger.json and reachable anonymously on the public mainnet nodes — alongside 89 published protobuf contract definitions (the ACS contract standards, plus the gRPC peer and cross-chain services), six first-party chain SDKs, the aelf-command CLI, and a first-party agent layer of packaged Agent Skills and a local MCP server.
 
-Its public machine-readable surface, as profiled here on 2026-09-09:
+**Areas:** Company · Blockchain · Layer 1 · Web3 · Smart Contracts · Cross-Chain · Developer Tools · Protobuf · Agent Skills · Cryptocurrency
 
-- **AElf node Web API** — OpenAPI 3.0.1, 24 operations, served live by the node itself at
-  `https://aelf-public-node.aelf.io/swagger/v1/swagger.json` (mainnet AELF and tDVV both answer).
-- **89 published protobuf contracts** — the ACS contract standards (ACS0–ACS12, ACS20, ACS721)
-  plus the gRPC peer and cross-chain services; seven saved verbatim under `grpc/`.
-- **Six first-party chain SDKs** (JavaScript, Python, C#, Go, Java, PHP) and the `aelf-command` CLI.
-- **A first-party agent layer** — provider-published Agent Skills and a stdio MCP server
-  (`@blockchain-forever/aelf-node-skill`, 11 tools). There is no hosted MCP endpoint and no A2A
-  agent card.
+## Aelf on APIs.io
 
-Links: <https://aelf.com/> · <https://docs.aelf.com/> · <https://github.com/AElfProject> ·
-harvest listing <https://forgeglobal.com/aelf-inc_stock/>
+Everything profiled for Aelf is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/aelf-inc/](https://apis.io/providers/aelf-inc/)** — or go straight to one of the APIs or properties below.
+
+### APIs (16)
+
+- [Aelf Admin API](https://apis.io/apis/aelf-inc/aelf-inc-admin-api/) — The admin API from Aelf — 1 operation(s) for admin.
+- [Aelf Approvals API](https://apis.io/apis/aelf-inc/aelf-inc-approvals-api/) — The approvals API from Aelf — 1 operation(s) for approvals.
+- [Aelf Balances API](https://apis.io/apis/aelf-inc/aelf-inc-balances-api/) — The balances API from Aelf — 1 operation(s) for balances.
+- [Aelf Block Chain API](https://apis.io/apis/aelf-inc/aelf-inc-blockchain-api/) — The BlockChain API from Aelf — 5 operation(s) for blockchain.
+- [Aelf Chains API](https://apis.io/apis/aelf-inc/aelf-inc-chains-api/) — The chains API from Aelf — 1 operation(s) for chains.
+- [Aelf Chain Status API](https://apis.io/apis/aelf-inc/aelf-inc-chainstatus-api/) — The ChainStatus API from Aelf — 1 operation(s) for chainstatus.
+- [Aelf Contract File Descriptor Set API](https://apis.io/apis/aelf-inc/aelf-inc-contractfiledescriptorset-api/) — The ContractFileDescriptorSet API from Aelf — 1 operation(s) for contractfiledescriptorset.
+- [Aelf Explorer API](https://apis.io/apis/aelf-inc/aelf-inc-explorer-api/) — The explorer API from Aelf — 3 operation(s) for explorer.
+- [Aelf Health API](https://apis.io/apis/aelf-inc/aelf-inc-health-api/) — The health API from Aelf — 1 operation(s) for health.
+- [Aelf Net API](https://apis.io/apis/aelf-inc/aelf-inc-net-api/) — The Net API from Aelf — 3 operation(s) for net.
+- [Aelf Task Queue Status API](https://apis.io/apis/aelf-inc/aelf-inc-taskqueuestatus-api/) — The TaskQueueStatus API from Aelf — 1 operation(s) for taskqueuestatus.
+- [Aelf Transaction API](https://apis.io/apis/aelf-inc/aelf-inc-transaction-api/) — The Transaction API from Aelf — 8 operation(s) for transaction.
+- [Aelf Transaction Result API](https://apis.io/apis/aelf-inc/aelf-inc-transactionresult-api/) — The TransactionResult API from Aelf — 4 operation(s) for transactionresult.
+- [Aelf Transactions API](https://apis.io/apis/aelf-inc/aelf-inc-transactions-api/) — The transactions API from Aelf — 1 operation(s) for transactions.
+- [Aelf Transfers API](https://apis.io/apis/aelf-inc/aelf-inc-transfers-api/) — The transfers API from Aelf — 2 operation(s) for transfers.
+- [Aelf Wallets API](https://apis.io/apis/aelf-inc/aelf-inc-wallets-api/) — The wallets API from Aelf — 2 operation(s) for wallets.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [aelf-node-skill](https://apis.io/servers/aelf-inc/aelf-node-skill/)
+
+#### JSON Schema (1)
+
+The data models the API reads and writes.
+
+- [WalletContextFileV1](https://apis.io/schemas/aelf-inc/aelf-inc-wallet-context-v1.schema/)
+
+#### Overlays (2)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Aelf Inc Agent Gateway Overlay](https://apis.io/overlays/aelf-inc/aelf-inc-agent-gateway-overlay/)
+- [Aelf Inc Node Web Api Overlay](https://apis.io/overlays/aelf-inc/aelf-inc-node-web-api-overlay/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Aelf Inc Authentication](https://apis.io/security/aelf-inc/aelf-inc-authentication/)
+- [Aelf Inc Domain Security](https://apis.io/security/aelf-inc/aelf-inc-domain-security/)
+- [Aelf Inc Vulnerability Disclosure](https://apis.io/security/aelf-inc/aelf-inc-vulnerability-disclosure/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Aelf Inc Plans Pricing](https://apis.io/plans/aelf-inc/aelf-inc-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Aelf Inc Rate Limits](https://apis.io/rate-limits/aelf-inc/aelf-inc-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://aelf.com/)
+- [Documentation](https://docs.aelf.com/)
+- [Getting started](https://docs.aelf.com/quick-start/)
+- [API reference](https://docs.aelf.com/tools/web-api/chain-api/)
+- [Support](https://form.aelf.com/contact)
+- [Blog](https://blog.aelf.com/)
+- [Security](https://github.com/AElfProject/.github/blob/master/SECURITY.md)
+- [Terms of service](https://docs.aelf.com/legal/terms-of-use/)
+- [Privacy policy](https://docs.aelf.com/legal/privacy-policy/)
+- [GitHub](https://github.com/AElfProject)
+
+## API Evangelist rating
+
+**Kin Score 44.3** — developing · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 70.0 |
+| Contract quality | 39.6 |
+| Contract governance | 0.0 |
+| Operational transparency | 34.2 |
+| Developer ergonomics | 85.7 |
+| Access clarity | 21.1 |
+
+**Agent readiness 37.3** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | documented (partial credit) |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | verified |
+| Error Semantics | verified |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | yes |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 30.4** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/aelf-inc/](https://apis.io/providers/aelf-inc/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Aelf: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/aelf-inc/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
