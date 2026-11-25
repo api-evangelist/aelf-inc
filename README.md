@@ -111,28 +111,40 @@ The data models the API reads and writes.
 
 OpenAPI overlays, including conversational phrasing for each operation.
 
-- [Aelf Inc Agent Gateway Overlay](https://apis.io/overlays/aelf-inc/aelf-inc-agent-gateway-overlay/)
-- [Aelf Inc Node Web Api Overlay](https://apis.io/overlays/aelf-inc/aelf-inc-node-web-api-overlay/)
+- [Aelf Agent Gateway Overlay](https://apis.io/overlays/aelf-inc/aelf-inc-agent-gateway-overlay/)
+- [Aelf Node Web Api Overlay](https://apis.io/overlays/aelf-inc/aelf-inc-node-web-api-overlay/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [Aelf API Rules](https://apis.io/rules/aelf-inc/aelf-inc-rules/)
 
 #### Security (3)
 
 Authentication, trust centre, and vulnerability disclosure.
 
-- [Aelf Inc Authentication](https://apis.io/security/aelf-inc/aelf-inc-authentication/)
-- [Aelf Inc Domain Security](https://apis.io/security/aelf-inc/aelf-inc-domain-security/)
-- [Aelf Inc Vulnerability Disclosure](https://apis.io/security/aelf-inc/aelf-inc-vulnerability-disclosure/)
+- [Aelf Authentication](https://apis.io/security/aelf-inc/aelf-inc-authentication/)
+- [Aelf Domain Security](https://apis.io/security/aelf-inc/aelf-inc-domain-security/)
+- [Aelf Vulnerability Disclosure](https://apis.io/security/aelf-inc/aelf-inc-vulnerability-disclosure/)
 
 #### Plans and pricing (1)
 
 Published plans, tiers and prices.
 
-- [Aelf Inc Plans Pricing](https://apis.io/plans/aelf-inc/aelf-inc-plans-pricing/)
+- [Aelf Plans Pricing](https://apis.io/plans/aelf-inc/aelf-inc-plans-pricing/)
 
 #### Rate limits (1)
 
 Published request limits.
 
-- [Aelf Inc Rate Limits](https://apis.io/rate-limits/aelf-inc/aelf-inc-rate-limits/)
+- [Aelf Rate Limits](https://apis.io/rate-limits/aelf-inc/aelf-inc-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Aelf Finops](https://apis.io/finops/aelf-inc/aelf-inc-finops/)
 
 ## Where to find this API
 
@@ -151,18 +163,18 @@ Links to the company's own pages. This repository publishes no copy of their spe
 
 ## API Evangelist rating
 
-**Kin Score 43.8** — developing · rubric 0.25.0 · scored 2026-10-23
+**Kin Score 45.8** — developing · rubric 0.28.1 · scored 2026-11-21
 
 | Facet | Score |
 |---|---|
 | Discoverability | 65.0 |
-| Contract quality | 39.6 |
-| Contract governance | 0.0 |
-| Operational transparency | 34.2 |
+| Contract quality | 41.5 |
+| Contract governance | 13.6 |
+| Operational transparency | 33.3 |
 | Developer ergonomics | 85.7 |
-| Access clarity | 21.1 |
+| Access clarity | 21.3 |
 
-**Agent readiness 39.0** — agent-native
+**Agent readiness 38.2** — agent-ready
 
 | Agent-readiness dimension | Result |
 |---|---|
@@ -187,6 +199,10 @@ Links to the company's own pages. This repository publishes no copy of their spe
 | Agentic Commerce | — |
 | Pagination Ratio | partial |
 | Operation Distinctiveness | distinct |
+| MCP Tool Quality | na |
+| Onboarding Descriptor | — |
+| Dns Aid Index | na |
+| Markdown Negotiation | na |
 
 **Regulatory alignment 30.4** — Horizontal (data, software, accessibility, platform)
 
